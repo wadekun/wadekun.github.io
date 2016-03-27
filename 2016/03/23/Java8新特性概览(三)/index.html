@@ -57,16 +57,16 @@
 
 
 
-<meta name="description" content="题外话最近在知乎上看到个话题，觉得挺有意思。不浮躁的社会是什么样的？(看完了，反省下自己，别浮躁)。尤其看到这个答案的时候，真是被触动到了，由衷的对这个老师感到敬佩。其实，我的梦想之一也是有了足够的钱去建学校(认真脸)…">
+<meta name="description" content="题外话最近在知乎上看到个话题，觉得挺有意思。不浮躁的社会是什么样的？(看完了，反省下自己，别浮躁)。尤其看到这个答案的时候，真是被触动到了，由衷的对这个老师感到敬佩。其实，我的梦想之一也是有了足够的钱去建所学校(认真脸)…">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java8新特性概览(三)">
 <meta property="og:url" content="http://wadekun.github.io/2016/03/23/Java8新特性概览(三)/index.html">
 <meta property="og:site_name" content="昆仑子的一亩三分地">
-<meta property="og:description" content="题外话最近在知乎上看到个话题，觉得挺有意思。不浮躁的社会是什么样的？(看完了，反省下自己，别浮躁)。尤其看到这个答案的时候，真是被触动到了，由衷的对这个老师感到敬佩。其实，我的梦想之一也是有了足够的钱去建学校(认真脸)…">
-<meta property="og:updated_time" content="2016-03-27T14:46:01.000Z">
+<meta property="og:description" content="题外话最近在知乎上看到个话题，觉得挺有意思。不浮躁的社会是什么样的？(看完了，反省下自己，别浮躁)。尤其看到这个答案的时候，真是被触动到了，由衷的对这个老师感到敬佩。其实，我的梦想之一也是有了足够的钱去建所学校(认真脸)…">
+<meta property="og:updated_time" content="2016-03-27T14:48:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java8新特性概览(三)">
-<meta name="twitter:description" content="题外话最近在知乎上看到个话题，觉得挺有意思。不浮躁的社会是什么样的？(看完了，反省下自己，别浮躁)。尤其看到这个答案的时候，真是被触动到了，由衷的对这个老师感到敬佩。其实，我的梦想之一也是有了足够的钱去建学校(认真脸)…">
+<meta name="twitter:description" content="题外话最近在知乎上看到个话题，觉得挺有意思。不浮躁的社会是什么样的？(看完了，反省下自己，别浮躁)。尤其看到这个答案的时候，真是被触动到了，由衷的对这个老师感到敬佩。其实，我的梦想之一也是有了足够的钱去建所学校(认真脸)…">
 
 
 
@@ -297,7 +297,7 @@
       
 
       
-        <h3 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h3><p>最近在知乎上看到个话题，觉得挺有意思。<a href="https://www.zhihu.com/question/22633562" target="_blank" rel="external">不浮躁的社会是什么样的？</a>(看完了，反省下自己，别浮躁)。尤其看到<a href="https://www.zhihu.com/question/22633562/answer/90351145" target="_blank" rel="external">这个答案</a>的时候，真是被触动到了，由衷的对这个老师感到敬佩。其实，我的梦想之一也是有了足够的钱去建学校(认真脸)…<br><a id="more"></a></p>
+        <h3 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h3><p>最近在知乎上看到个话题，觉得挺有意思。<a href="https://www.zhihu.com/question/22633562" target="_blank" rel="external">不浮躁的社会是什么样的？</a>(看完了，反省下自己，别浮躁)。尤其看到<a href="https://www.zhihu.com/question/22633562/answer/90351145" target="_blank" rel="external">这个答案</a>的时候，真是被触动到了，由衷的对这个老师感到敬佩。其实，我的梦想之一也是有了足够的钱去建所学校(认真脸)…<br><a id="more"></a></p>
 <h3 id="使用lambda编程"><a href="#使用lambda编程" class="headerlink" title="使用lambda编程"></a>使用lambda编程</h3><ul>
 <li>使用lambda表达式的主要原因是，将代码的执行延迟到一个合适的时间点。</li>
 <li>当执行一个lambda表达式时，请确认提供了所有必须的参数作为输入。</li>
@@ -454,7 +454,7 @@
 }
 </code></pre></li>
 </ul>
-<h4 id="lambda表达式和泛型"><a href="#lambda表达式和泛型" class="headerlink" title="lambda表达式和泛型"></a>lambda表达式和泛型</h4><p><strong>一般准则是父类作为参数类型，子类作为返回类型</strong> ，这样，可以将一个Consumer<object> 传递给一个 Stream<string>的forEach方法。可以处理Object，也就是任何对象，当然也包括String咯。<br>这样刚才的doInOrderAsync方法的入参应如下：<br><code>void doInOrderAsync(Supplier&lt;? extends T&gt; first, Consumer&lt;? super T&gt; second, Consumer&lt;? super T&gt; handler)</code></string></object></p>
+<h4 id="lambda表达式和泛型"><a href="#lambda表达式和泛型" class="headerlink" title="lambda表达式和泛型"></a>lambda表达式和泛型</h4><p><strong>一般准则是父类作为参数类型，子类作为返回类型</strong> ，这样，可以将一个<code>Consumer&lt;Object&gt;</code> 传递给一个 <code>Stream&lt;String&gt;</code>的forEach方法。可以处理Object，也就是任何对象，当然也包括String咯。<br>这样刚才的doInOrderAsync方法的入参应如下：<br><code>void doInOrderAsync(Supplier&lt;? extends T&gt; first, Consumer&lt;? super T&gt; second, Consumer&lt;? super T&gt; handler)</code></p>
 <h3 id="新的日期和时间API"><a href="#新的日期和时间API" class="headerlink" title="新的日期和时间API"></a>新的日期和时间API</h3><p>  <code>todo...</code></p>
 <h3 id="并发增强"><a href="#并发增强" class="headerlink" title="并发增强"></a>并发增强</h3><p>  <code>todo...</code></p>
 <h3 id="JavaScript引擎－Nashorn"><a href="#JavaScript引擎－Nashorn" class="headerlink" title="JavaScript引擎－Nashorn"></a>JavaScript引擎－Nashorn</h3><p>  <code>todo...</code></p>
