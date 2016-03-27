@@ -57,16 +57,16 @@
 
 
 
-<meta name="description" content="题外话最近在知乎上看到两个话题，觉得挺有意思。不浮躁的社会是什么样的？、活在中国，你感觉这个国家最让人不解的是什么？，(第一个看完了，反省下自己，别浮躁。第二个看完了抓紧补几期天朝新闻联播，心态积极点，挺好)。尤其看到这个答案的时候，真是被触动到了，由衷的对这个老师感到敬佩。其实，我的梦想之一也是有了足够的钱去建学校(认真脸)… 有空要单独写篇文章聊聊这个。">
+<meta name="description" content="题外话最近在知乎上看到个话题，觉得挺有意思。不浮躁的社会是什么样的？(看完了，反省下自己，别浮躁)。尤其看到这个答案的时候，真是被触动到了，由衷的对这个老师感到敬佩。其实，我的梦想之一也是有了足够的钱去建学校(认真脸)…">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java8新特性概览(三)">
 <meta property="og:url" content="http://wadekun.github.io/2016/03/23/Java8新特性概览(三)/index.html">
 <meta property="og:site_name" content="昆仑子的一亩三分地">
-<meta property="og:description" content="题外话最近在知乎上看到两个话题，觉得挺有意思。不浮躁的社会是什么样的？、活在中国，你感觉这个国家最让人不解的是什么？，(第一个看完了，反省下自己，别浮躁。第二个看完了抓紧补几期天朝新闻联播，心态积极点，挺好)。尤其看到这个答案的时候，真是被触动到了，由衷的对这个老师感到敬佩。其实，我的梦想之一也是有了足够的钱去建学校(认真脸)… 有空要单独写篇文章聊聊这个。">
-<meta property="og:updated_time" content="2016-03-25T06:00:18.000Z">
+<meta property="og:description" content="题外话最近在知乎上看到个话题，觉得挺有意思。不浮躁的社会是什么样的？(看完了，反省下自己，别浮躁)。尤其看到这个答案的时候，真是被触动到了，由衷的对这个老师感到敬佩。其实，我的梦想之一也是有了足够的钱去建学校(认真脸)…">
+<meta property="og:updated_time" content="2016-03-27T14:46:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java8新特性概览(三)">
-<meta name="twitter:description" content="题外话最近在知乎上看到两个话题，觉得挺有意思。不浮躁的社会是什么样的？、活在中国，你感觉这个国家最让人不解的是什么？，(第一个看完了，反省下自己，别浮躁。第二个看完了抓紧补几期天朝新闻联播，心态积极点，挺好)。尤其看到这个答案的时候，真是被触动到了，由衷的对这个老师感到敬佩。其实，我的梦想之一也是有了足够的钱去建学校(认真脸)… 有空要单独写篇文章聊聊这个。">
+<meta name="twitter:description" content="题外话最近在知乎上看到个话题，觉得挺有意思。不浮躁的社会是什么样的？(看完了，反省下自己，别浮躁)。尤其看到这个答案的时候，真是被触动到了，由衷的对这个老师感到敬佩。其实，我的梦想之一也是有了足够的钱去建学校(认真脸)…">
 
 
 
@@ -297,9 +297,164 @@
       
 
       
-        <h3 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h3><p>最近在知乎上看到两个话题，觉得挺有意思。<a href="https://www.zhihu.com/question/22633562" target="_blank" rel="external">不浮躁的社会是什么样的？</a>、<a href="https://www.zhihu.com/question/38708083" target="_blank" rel="external">活在中国，你感觉这个国家最让人不解的是什么？</a>，(第一个看完了，反省下自己，别浮躁。第二个看完了抓紧补几期天朝新闻联播，心态积极点，挺好)。尤其看到<a href="https://www.zhihu.com/question/22633562/answer/90351145" target="_blank" rel="external">这个答案</a>的时候，真是被触动到了，由衷的对这个老师感到敬佩。其实，我的梦想之一也是有了足够的钱去建学校(认真脸)… 有空要单独写篇文章聊聊这个。   </p>
-<a id="more"></a>
-<h3 id="使用lambda编程"><a href="#使用lambda编程" class="headerlink" title="使用lambda编程"></a>使用lambda编程</h3><p> <code>todo...</code></p>
+        <h3 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h3><p>最近在知乎上看到个话题，觉得挺有意思。<a href="https://www.zhihu.com/question/22633562" target="_blank" rel="external">不浮躁的社会是什么样的？</a>(看完了，反省下自己，别浮躁)。尤其看到<a href="https://www.zhihu.com/question/22633562/answer/90351145" target="_blank" rel="external">这个答案</a>的时候，真是被触动到了，由衷的对这个老师感到敬佩。其实，我的梦想之一也是有了足够的钱去建学校(认真脸)…<br><a id="more"></a></p>
+<h3 id="使用lambda编程"><a href="#使用lambda编程" class="headerlink" title="使用lambda编程"></a>使用lambda编程</h3><ul>
+<li>使用lambda表达式的主要原因是，将代码的执行延迟到一个合适的时间点。</li>
+<li>当执行一个lambda表达式时，请确认提供了所有必须的参数作为输入。</li>
+<li>如果可以，请选择一个已有的函数式接口。</li>
+<li>编写一个返回函数式接口实例的方法通常很有用。</li>
+<li>当你使用转换时，请考虑如何能组合它们。</li>
+<li>要延迟组合转换，你需要保留一个所有未执行的转换列表，并在最后应用它们。</li>
+<li>如果你需要多次应用一个lambda表达式，最好将工作分成多个子任务，以便可以并发执行。</li>
+<li>考虑如何处理lambda表达式中抛出异常的情况。</li>
+<li>当使用泛型函数式接口时，请使用<code>? Super</code>通配符作为参数类型，使用<code>? Extend</code>通配符作为返回类型。</li>
+<li>当使用可以被函数转换的泛型类型时，请考虑使用map和flatMap。</li>
+</ul>
+<h4 id="延迟执行"><a href="#延迟执行" class="headerlink" title="延迟执行"></a>延迟执行</h4><p>lambda表达式都是 <strong>延迟执行</strong> 的。</p>
+<p>延迟执行的原因有很多，例如：  </p>
+<ol>
+<li>在另一个线程中运行代码。</li>
+<li>多次运行代码。</li>
+<li>在某个算法的正确时间上运行代码(例如排序中的比较操作)</li>
+<li>当某些情况发生时运行代码(按钮被点击，数据到达等)</li>
+<li>只有在需要的时候才运行的代码</li>
+</ol>
+<p>例如，在记录INFO级别的日志时</p>
+<pre><code>public static void info(Logger logger, Supplier&lt;String&gt; message){
+    if(logger.isLoggable(Level.INFO)){//当日志级别INFO开启时
+      logger.info(message.get());
+    }
+}
+</code></pre><h4 id="选择一个函数式接口"><a href="#选择一个函数式接口" class="headerlink" title="选择一个函数式接口"></a>选择一个函数式接口</h4><ul>
+<li>常用函数式接口</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">函数式接口</th>
+<th style="text-align:left">参数类型</th>
+<th>返回类型</th>
+<th>抽象方法名</th>
+<th>描述</th>
+<th>其他方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Runnable</td>
+<td style="text-align:left">无</td>
+<td>void</td>
+<td>run</td>
+<td>执行一个没有参数和返回值的操作</td>
+<td>-</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>Supplier&lt;T&gt;</code></td>
+<td style="text-align:left">无</td>
+<td>T</td>
+<td>get</td>
+<td>提供一个T类型的值</td>
+<td>-</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>Consumer&lt;T&gt;</code></td>
+<td style="text-align:left">T</td>
+<td>void</td>
+<td>accept</td>
+<td>处理一个T类型的值</td>
+<td>chain</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>BiConsumer&lt;T, U&gt;</code></td>
+<td style="text-align:left">T, U</td>
+<td>void</td>
+<td>accept</td>
+<td>处理一个T类型和U类型的值</td>
+<td>chain</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>Function&lt;T, R&gt;</code></td>
+<td style="text-align:left">T</td>
+<td>R</td>
+<td>apply</td>
+<td>一个参数类型为T返回值类型为R的函数</td>
+<td>compose,andThen,identity</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>BiFunction&lt;T, U, R&gt;</code></td>
+<td style="text-align:left">T, U</td>
+<td>R</td>
+<td>apply</td>
+<td>一个参数类型为T和U返回值类型为R的函数</td>
+<td>andThen</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>UnaryOperator&lt;T&gt;</code></td>
+<td style="text-align:left">T</td>
+<td>T</td>
+<td>apply</td>
+<td>对类型T进行一元操作</td>
+<td>compose, andThen, identity</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>BinaryOperator&lt;T&gt;</code></td>
+<td style="text-align:left">T, T</td>
+<td>T</td>
+<td>apply</td>
+<td>对类型T进行的二元操作</td>
+<td>andThen</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>Predicate&lt;T&gt;</code></td>
+<td style="text-align:left">T</td>
+<td>boolean</td>
+<td>test</td>
+<td>一个计算Boolean值的函数</td>
+<td>And, or, negate, isEqual</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>BiPredicate&lt;T, U&gt;</code></td>
+<td style="text-align:left">T, U</td>
+<td>boolean</td>
+<td>test</td>
+<td>一个根据T、U类型参数计算boolean值得函数</td>
+<td>And, or, negate</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>为原始类型提供的函数式接口</p>
+<p>当然，API还提供了为原始类型提供的函数式接口。<br>例如返回 boolean的 BooleanSupplier接口。提供Int值的IntSupplier，消费Int值的IntConsumer。Int转double的IntToDoubleFunction。</p>
+</li>
+<li><p>自己动手写一个函数式接口<br>自己动手写一个函数式接口：<br>允许用户指定的一个函数 (int, int, Color) -&gt; Color，根据图片中(x, y)位置上的像素来计算新的颜色   </p>
+<p>  @FunctionalInterface<br>  public interface ColorTransformer {</p>
+<pre><code>Color apply(int x, int y, Color colorAtXY);
+</code></pre><p>  }</p>
+</li>
+</ul>
+<h4 id="返回函数与组合"><a href="#返回函数与组合" class="headerlink" title="返回函数与组合"></a>返回函数与组合</h4><pre><code>public static &lt;T&gt; UnaryOperator&lt;T&gt; compose(UnaryOperator&lt;T&gt; op1, UnaryOperator&lt;T&gt; op2){
+  return t -&gt; op2.apply(op1.apply(t));
+}
+</code></pre><h4 id="延迟与并行操作"><a href="#延迟与并行操作" class="headerlink" title="延迟与并行操作"></a>延迟与并行操作</h4><p><code>todo...</code></p>
+<h4 id="处理异常"><a href="#处理异常" class="headerlink" title="处理异常"></a>处理异常</h4><ul>
+<li><p>提供一个异常处理的handler</p>
+<pre><code>&lt;T&gt; void doInOrderAsync(Supplier&lt;T&gt; first, Consumer&lt;T&gt; second, Consumer&lt;Throwable&gt; handler){
+  Thread t = new Thread(new Runnable() {
+      @Override
+      public void run() {
+          try {
+              T t = first.get();
+              second.accept(t);
+          } catch (Exception e) {
+              handler.accept(e);
+          }
+      }
+  });
+  t.start();
+}
+</code></pre></li>
+</ul>
+<h4 id="lambda表达式和泛型"><a href="#lambda表达式和泛型" class="headerlink" title="lambda表达式和泛型"></a>lambda表达式和泛型</h4><p><strong>一般准则是父类作为参数类型，子类作为返回类型</strong> ，这样，可以将一个Consumer<object> 传递给一个 Stream<string>的forEach方法。可以处理Object，也就是任何对象，当然也包括String咯。<br>这样刚才的doInOrderAsync方法的入参应如下：<br><code>void doInOrderAsync(Supplier&lt;? extends T&gt; first, Consumer&lt;? super T&gt; second, Consumer&lt;? super T&gt; handler)</code></string></object></p>
 <h3 id="新的日期和时间API"><a href="#新的日期和时间API" class="headerlink" title="新的日期和时间API"></a>新的日期和时间API</h3><p>  <code>todo...</code></p>
 <h3 id="并发增强"><a href="#并发增强" class="headerlink" title="并发增强"></a>并发增强</h3><p>  <code>todo...</code></p>
 <h3 id="JavaScript引擎－Nashorn"><a href="#JavaScript引擎－Nashorn" class="headerlink" title="JavaScript引擎－Nashorn"></a>JavaScript引擎－Nashorn</h3><p>  <code>todo...</code></p>
@@ -457,7 +612,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#题外话"><span class="nav-number">1.</span> <span class="nav-text">题外话</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用lambda编程"><span class="nav-number">2.</span> <span class="nav-text">使用lambda编程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新的日期和时间API"><span class="nav-number">3.</span> <span class="nav-text">新的日期和时间API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#并发增强"><span class="nav-number">4.</span> <span class="nav-text">并发增强</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript引擎－Nashorn"><span class="nav-number">5.</span> <span class="nav-text">JavaScript引擎－Nashorn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaFX"><span class="nav-number">6.</span> <span class="nav-text">JavaFX</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#杂项改进"><span class="nav-number">7.</span> <span class="nav-text">杂项改进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#容易被忽略的Java7特性"><span class="nav-number">8.</span> <span class="nav-text">容易被忽略的Java7特性</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#题外话"><span class="nav-number">1.</span> <span class="nav-text">题外话</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用lambda编程"><span class="nav-number">2.</span> <span class="nav-text">使用lambda编程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#延迟执行"><span class="nav-number">2.1.</span> <span class="nav-text">延迟执行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选择一个函数式接口"><span class="nav-number">2.2.</span> <span class="nav-text">选择一个函数式接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#返回函数与组合"><span class="nav-number">2.3.</span> <span class="nav-text">返回函数与组合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#延迟与并行操作"><span class="nav-number">2.4.</span> <span class="nav-text">延迟与并行操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#处理异常"><span class="nav-number">2.5.</span> <span class="nav-text">处理异常</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lambda表达式和泛型"><span class="nav-number">2.6.</span> <span class="nav-text">lambda表达式和泛型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新的日期和时间API"><span class="nav-number">3.</span> <span class="nav-text">新的日期和时间API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#并发增强"><span class="nav-number">4.</span> <span class="nav-text">并发增强</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript引擎－Nashorn"><span class="nav-number">5.</span> <span class="nav-text">JavaScript引擎－Nashorn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaFX"><span class="nav-number">6.</span> <span class="nav-text">JavaFX</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#杂项改进"><span class="nav-number">7.</span> <span class="nav-text">杂项改进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#容易被忽略的Java7特性"><span class="nav-number">8.</span> <span class="nav-text">容易被忽略的Java7特性</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
