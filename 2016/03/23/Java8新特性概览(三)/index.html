@@ -63,7 +63,7 @@
 <meta property="og:url" content="http://wadekun.github.io/2016/03/23/Java8新特性概览(三)/index.html">
 <meta property="og:site_name" content="昆仑子的一亩三分地">
 <meta property="og:description" content="题外话最近在知乎上看到个话题，觉得挺有意思。不浮躁的社会是什么样的？(看完了，反省下自己，别浮躁)。尤其看到这个答案的时候，真是被触动到了，由衷的对这个老师感到敬佩。其实，我的梦想之一就是有了足够的钱去建所学校(认真脸)…">
-<meta property="og:updated_time" content="2016-03-27T14:50:10.000Z">
+<meta property="og:updated_time" content="2016-03-29T15:57:33.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java8新特性概览(三)">
 <meta name="twitter:description" content="题外话最近在知乎上看到个话题，觉得挺有意思。不浮躁的社会是什么样的？(看完了，反省下自己，别浮躁)。尤其看到这个答案的时候，真是被触动到了，由衷的对这个老师感到敬佩。其实，我的梦想之一就是有了足够的钱去建所学校(认真脸)…">
@@ -455,8 +455,131 @@
 </code></pre></li>
 </ul>
 <h4 id="lambda表达式和泛型"><a href="#lambda表达式和泛型" class="headerlink" title="lambda表达式和泛型"></a>lambda表达式和泛型</h4><p><strong>一般准则是父类作为参数类型，子类作为返回类型</strong> ，这样，可以将一个<code>Consumer&lt;Object&gt;</code> 传递给一个 <code>Stream&lt;String&gt;</code>的forEach方法。可以处理Object，也就是任何对象，当然也包括String咯。<br>这样刚才的doInOrderAsync方法的入参应如下：<br><code>void doInOrderAsync(Supplier&lt;? extends T&gt; first, Consumer&lt;? super T&gt; second, Consumer&lt;? super T&gt; handler)</code></p>
-<h3 id="新的日期和时间API"><a href="#新的日期和时间API" class="headerlink" title="新的日期和时间API"></a>新的日期和时间API</h3><p>  <code>todo...</code></p>
-<h3 id="并发增强"><a href="#并发增强" class="headerlink" title="并发增强"></a>并发增强</h3><p>  <code>todo...</code></p>
+<h3 id="新的日期和时间API"><a href="#新的日期和时间API" class="headerlink" title="新的日期和时间API"></a>新的日期和时间API</h3><ul>
+<li>所有java.time对象都是不可变的</li>
+<li>一个瞬间(Instant)是时间线上的一个点(与Date类似)</li>
+<li>在Java事件中，每天都是86400秒(即没有闰秒)</li>
+<li>持续时间(Duration)是两个瞬间之间的时间</li>
+<li>LocalDateTime没有时区信息</li>
+<li>TemporalAdjuster 的方法可以处理常用的日历计算，例如找到某个月的第一个星期二</li>
+<li>ZonedDateTime 是指定时区中的某一个时间点(类似于Gregorian Calendar)</li>
+<li>单处理带时区的时间时，请使用时段(Period)，而非 Duration，以便将夏令时的变化考虑在内</li>
+<li>使用DateTimeFormatter 来格式化日期和时间</li>
+</ul>
+<h4 id="时间点与时间段"><a href="#时间点与时间段" class="headerlink" title="时间点与时间段"></a>时间点与时间段</h4><p>  在java中有如下时标：</p>
+<ol>
+<li>每天都有86400秒</li>
+<li>每天正午与官方时间准确匹配</li>
+<li>其他时间也要以一种精确定义的方式与其紧密匹配</li>
+</ol>
+<p>Java8中引入的时间点与持续时间</p>
+<ul>
+<li><code>Instant</code>：一个instant对象表示时间轴上的一个点。<br>时间原点被规定为1970年1月1日的午夜，此时本初子午线正在穿过伦敦格林尼治皇家天文台。<ul>
+<li><code>Instant.MIN</code> 表示10亿年前。</li>
+<li><code>Instant.MAX</code> 表示10 0000 0000 年的12月31日。</li>
+<li><code>Instant.now()</code>会返回当前的瞬间点。</li>
+</ul>
+</li>
+<li><p><code>Duration</code> : 两个时间点之前的时间量   </p>
+<pre><code>Instant start = Instant.now();
+runAlgorithm();
+Instant end = Instant.now();
+Duration timeElapsed = Duration.between(start, end);
+long millis = timeElapsed.toMillis();
+</code></pre></li>
+<li><code>Period</code> 时段：表示一段逝去的年、月 或 日</li>
+</ul>
+<ul>
+<li>Instant与Duration的其他操作见API<h4 id="本地日期-LocalDate"><a href="#本地日期-LocalDate" class="headerlink" title="本地日期(LocalDate)"></a>本地日期(LocalDate)</h4><code>LocalDate</code> 是一个带有年份，月份，当月天数的日期。</li>
+<li>创建LocalDate<ul>
+<li><code>LocalDate today = LocalDate.now(); //今天的日期</code></li>
+<li><code>LocalDate alonzosBirthday = LocalDate.of(1903, 6, 14);</code><br><code>alonzosBirthday = LocalDate.of(1903, Month.JUNE, 14); //使用Month枚举</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="日期矫正器"><a href="#日期矫正器" class="headerlink" title="日期矫正器"></a>日期矫正器</h4><p>  对于一些需要安排调度的应用程序，通常需要计算例如“每月的第一个周二”这样的日期。<code>TemporalAdjusters</code>类提供了许多静态方法来进行常用的矫正。你可以将一个矫正方法的结果传递给with方法。例如，你可以通过如下代码来计算某个月第一个周二：    </p>
+<pre><code>LocalDate firstTuseDay = LocalDate.of(year, month, 1).with(TemporalAdjusters.nextOrSame(DayOfWeek.TUESDAY));
+</code></pre><h4 id="本地时间"><a href="#本地时间" class="headerlink" title="本地时间"></a>本地时间</h4><p>  LocalTime 表示一天中的某个时间，例如 15:30:00。你可以使用now或者of方法来创建一个LocalTime实例。</p>
+<pre><code>LocalTime rightNow = LocalTime.now();
+LocalTime bedtime = LocalTime.of(22, 30);// 或者LocalTime.of(22, 30, 00);
+</code></pre><h4 id="带时区的时间"><a href="#带时区的时间" class="headerlink" title="带时区的时间"></a>带时区的时间</h4><p>  <code>ZonedDateTime</code></p>
+<ul>
+<li>localDateTime.atZone(zoneId)</li>
+<li>ZonedDateTime.of(1969, 7, 16, 9, 32, 0, 0, ZoneId.of(“America/New_York”));</li>
+</ul>
+<h4 id="格式化和解析-DateTimeFormatter"><a href="#格式化和解析-DateTimeFormatter" class="headerlink" title="格式化和解析 DateTimeFormatter"></a>格式化和解析 <code>DateTimeFormatter</code></h4><p>  提供了三种方法来格式化打印日期/时间：</p>
+<ul>
+<li>预定义的标准格式</li>
+<li>语言环境相关的格式</li>
+<li>自定义的格式<br><code>DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm:ss&quot;);</code></li>
+</ul>
+<h3 id="并发增强"><a href="#并发增强" class="headerlink" title="并发增强"></a>并发增强</h3><ul>
+<li>使用<code>updateAndGet/accumulateAndGet</code>方法可以更容易的更新原子变量</li>
+<li>在激烈的竞争环境下，<code>LongAccumulator/DoubleAccumulator</code>比<code>AtomicLong/AtomicDouble</code>效率更高</li>
+<li>使用<code>compute/merge</code>方法可以更容易的更新<code>ConcurrentHashMap</code>中的元素项</li>
+<li>ConcurrentHashMap提供了对键、值、键值对 及各元素项的各类操作，例如：search、reduce、forEach</li>
+<li>集合视图允许将ConcurrentHashMap作为一个Set来使用</li>
+<li>Arrays 类提供了排序、填充 及前缀操作的并行方法</li>
+<li>完善的Future 类允许你创建异步的操作</li>
+</ul>
+<h4 id="原子值"><a href="#原子值" class="headerlink" title="原子值"></a>原子值</h4><p>在Java5中提供了 java.util.concurrent包，为我们提供了线程安全的集合和线程池，以及很多其他的并发工具。<br>在Java8之前常见的 CAS(compare and swap)加自旋来更新一个原子量：</p>
+<pre><code>public static AtomicLong largest = new AtomicLong();
+do {
+  oldValue = largest.get(); //获得当前值
+  newValue = Math.max(oldValue, observed); // observed 观测值
+} while (!largest.compareAndSet(oldValue, newValue));
+</code></pre><p>在Java8中，可以通过 <code>updateAndGet(LongUnaryOperator updateFunction)/getAndAccumulate(long x, LongBinaryOperator accumulatorFunction)</code>，来更方便的实现这个操作：</p>
+<pre><code>largest.updateAndGet(x -&gt; Math.max(x, observed));
+//或
+largest.getAndAccumulate(observed, Math::max);
+</code></pre><p>当有大量线程访问同一个原子值时，偶遇乐观锁更新需要太多次重试，因此会导致性能严重下降。为此Java8提供了<code>LongAdder</code>和<code>LongAccumulator</code>来解决该问题。LongAdder由多个变量组成，这些变量会自动增加新的被加数。由于通常情况下都是知道所有工作完成后才需要总和值，所以这种方法效率很高。</p>
+<p>如果你的环境中存在高度竞争，那么就应该用LongAdder 来替代 AtomicLong。 在LongAdder中，<code>increment()</code>方法用来将计数器自增1，<code>add</code>方法用来加上某个数值，<code>sum</code>方法用来获取总和值。</p>
+<pre><code>final LongAdder adder = new LongAdder();
+for(...){
+  pool.submit(() -&gt; {
+    while(...){
+      ...
+      if (...) adder.increment(); //自增1
+    }
+  });
+}
+...
+long total = adder.sum();
+</code></pre><p>关于LongAdder的实现，可以参看<a href="http://coolshell.cn/articles/11454.html" target="_blank" rel="external">从LongAdder看更高效的无锁实现</a>。</p>
+<p>LongAccumulator 将这个思想带到了任意的累加操作中。在构造函数中，你需要提供操作类型及其中的中立元素。要与新值相加，需要调用accumulate方法。然后调用 get 方法获取当前值。以下代码与 LongAdder 的效果是一样的：</p>
+<pre><code>LongAccumulator adder = new LongAccumulator(Long::sum, 0);
+//在某些线程中
+adder.accumulate(value);
+</code></pre><p>在 LongAccumulator 的内部，包含 a1,a2,a3,…an等多个变量。每个变量都被初始化为中立元素(在上面的例子中即为0)。<br>当调用 accum 方法累加值V时，这些变量其中之一会自动被更新为 <code>ai = ai op v</code>，其中op是以中缀形式表示的累加操作。在上面的实例中，调用accumulate会对变量i计算 ai = ai+v。 get 方法的结果为 a1<code>op</code>a2<code>op</code>a3<code>op</code>…<code>op</code>an。在上面的例子中，它会计算所有变量的总和，即 a1+a2+…+an。</p>
+<p>Java8中新增了一个<code>StampedLock</code>类，用来实现乐观读。</p>
+<pre><code>public class Vector{
+  private int size;
+  private Object[] elements;
+  // 实现乐观读
+  private StampedLock lock = new StampedLock();
+
+  public Object get(int n){
+    //1.获得一个 印戳
+    long stamp = lock.tryOptimisticRead();
+    //2.读取值
+    Object[] currentElements = elements;
+    int currentSize = size;
+    //3.检查印戳 是否仍然有效
+    if (!lock.validate(stamp)){
+      //4. 印戳无效，获得一个读锁(将会阻塞所有的写锁)
+      stamp = lock.readLock();
+      //5. 在此读取值
+      currentElements = elements;
+      currentSize = size;
+      //6. 释放读锁
+      lock.unlockRead(stamp);
+    }
+    return n &lt; currentSize ? currentElements[n] : null;
+  }
+  ...
+}
+</code></pre><h4 id="ConcurrentHashMap-改进"><a href="#ConcurrentHashMap-改进" class="headerlink" title="ConcurrentHashMap 改进"></a>ConcurrentHashMap 改进</h4><p><code>todo...</code></p>
+<h4 id="CompletableFuture"><a href="#CompletableFuture" class="headerlink" title="CompletableFuture"></a>CompletableFuture</h4><p><code>todo...</code></p>
 <h3 id="JavaScript引擎－Nashorn"><a href="#JavaScript引擎－Nashorn" class="headerlink" title="JavaScript引擎－Nashorn"></a>JavaScript引擎－Nashorn</h3><p>  <code>todo...</code></p>
 <h3 id="JavaFX"><a href="#JavaFX" class="headerlink" title="JavaFX"></a>JavaFX</h3><p>  <code>todo...</code></p>
 <h3 id="杂项改进"><a href="#杂项改进" class="headerlink" title="杂项改进"></a>杂项改进</h3><p>  <code>todo...</code></p>
@@ -612,7 +735,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#题外话"><span class="nav-number">1.</span> <span class="nav-text">题外话</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用lambda编程"><span class="nav-number">2.</span> <span class="nav-text">使用lambda编程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#延迟执行"><span class="nav-number">2.1.</span> <span class="nav-text">延迟执行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选择一个函数式接口"><span class="nav-number">2.2.</span> <span class="nav-text">选择一个函数式接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#返回函数与组合"><span class="nav-number">2.3.</span> <span class="nav-text">返回函数与组合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#延迟与并行操作"><span class="nav-number">2.4.</span> <span class="nav-text">延迟与并行操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#处理异常"><span class="nav-number">2.5.</span> <span class="nav-text">处理异常</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lambda表达式和泛型"><span class="nav-number">2.6.</span> <span class="nav-text">lambda表达式和泛型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新的日期和时间API"><span class="nav-number">3.</span> <span class="nav-text">新的日期和时间API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#并发增强"><span class="nav-number">4.</span> <span class="nav-text">并发增强</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript引擎－Nashorn"><span class="nav-number">5.</span> <span class="nav-text">JavaScript引擎－Nashorn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaFX"><span class="nav-number">6.</span> <span class="nav-text">JavaFX</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#杂项改进"><span class="nav-number">7.</span> <span class="nav-text">杂项改进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#容易被忽略的Java7特性"><span class="nav-number">8.</span> <span class="nav-text">容易被忽略的Java7特性</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#题外话"><span class="nav-number">1.</span> <span class="nav-text">题外话</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用lambda编程"><span class="nav-number">2.</span> <span class="nav-text">使用lambda编程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#延迟执行"><span class="nav-number">2.1.</span> <span class="nav-text">延迟执行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选择一个函数式接口"><span class="nav-number">2.2.</span> <span class="nav-text">选择一个函数式接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#返回函数与组合"><span class="nav-number">2.3.</span> <span class="nav-text">返回函数与组合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#延迟与并行操作"><span class="nav-number">2.4.</span> <span class="nav-text">延迟与并行操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#处理异常"><span class="nav-number">2.5.</span> <span class="nav-text">处理异常</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lambda表达式和泛型"><span class="nav-number">2.6.</span> <span class="nav-text">lambda表达式和泛型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新的日期和时间API"><span class="nav-number">3.</span> <span class="nav-text">新的日期和时间API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#时间点与时间段"><span class="nav-number">3.1.</span> <span class="nav-text">时间点与时间段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#本地日期-LocalDate"><span class="nav-number">3.2.</span> <span class="nav-text">本地日期(LocalDate)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#日期矫正器"><span class="nav-number">3.3.</span> <span class="nav-text">日期矫正器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#本地时间"><span class="nav-number">3.4.</span> <span class="nav-text">本地时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#带时区的时间"><span class="nav-number">3.5.</span> <span class="nav-text">带时区的时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#格式化和解析-DateTimeFormatter"><span class="nav-number">3.6.</span> <span class="nav-text">格式化和解析 DateTimeFormatter</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#并发增强"><span class="nav-number">4.</span> <span class="nav-text">并发增强</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原子值"><span class="nav-number">4.1.</span> <span class="nav-text">原子值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ConcurrentHashMap-改进"><span class="nav-number">4.2.</span> <span class="nav-text">ConcurrentHashMap 改进</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CompletableFuture"><span class="nav-number">4.3.</span> <span class="nav-text">CompletableFuture</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript引擎－Nashorn"><span class="nav-number">5.</span> <span class="nav-text">JavaScript引擎－Nashorn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaFX"><span class="nav-number">6.</span> <span class="nav-text">JavaFX</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#杂项改进"><span class="nav-number">7.</span> <span class="nav-text">杂项改进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#容易被忽略的Java7特性"><span class="nav-number">8.</span> <span class="nav-text">容易被忽略的Java7特性</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
