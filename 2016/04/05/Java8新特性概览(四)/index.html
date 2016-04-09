@@ -63,7 +63,7 @@
 <meta property="og:url" content="http://wadekun.github.io/2016/04/05/Java8新特性概览(四)/index.html">
 <meta property="og:site_name" content="昆仑子的一亩三分地">
 <meta property="og:description" content="杂项改进除了lambda和stream Api等重大改进外，Java8 还对库进行了大量微小却实用的改进。包括对 字符串、数字、数学、集合、文件、注解、正则表达式及JDBC等。">
-<meta property="og:updated_time" content="2016-04-05T13:50:41.000Z">
+<meta property="og:updated_time" content="2016-04-06T12:38:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java8新特性概览(四)">
 <meta name="twitter:description" content="杂项改进除了lambda和stream Api等重大改进外，Java8 还对库进行了大量微小却实用的改进。包括对 字符串、数字、数学、集合、文件、注解、正则表达式及JDBC等。">
@@ -313,8 +313,7 @@ System.out.println(ids);// 在我的电脑上：Asia/Aden, America/Cuiaba, Etc/G
 <li>无符号计算<br>Integer类现在支持无符号计算。例如，以往Byte表示从 -128到127的范围，现在可以调用静态方法 Byte.toUnSignedInt(b);来获取一个从-到255的值。一般来说，使用无符号数字，你会丢失负数并获得原来两倍范围的整数。<br>Integer和Long类中新增了处理无符号值的 <code>compareUnsigned</code>、<code>divideUnsigned</code> 和 <code>remainderUnsigned</code> 方法。你不需要特殊的方法来计算加法、减法 和 乘法。操作符 <code>+</code> 和 <code>-</code>已经能够正确的处理无符号值。由于大于 <code>Integer.MAX_VALUE</code>的无符号整数相乘会溢出，对于溢出的数值，应当调用<code>toUnSignedLong</code>将值作为长整形。</li>
 <li>BigInteger.(long|int|short|byte)ValueExact()<br>BigInteger类新增加了实例方法 (long|int|short|byte)ValueExact，分别用来返回 long、int、short 或者 byte。并且当值不在目标范围内时抛出一个 ArithmeticException异常。</li>
 </ul>
-<h4 id="新的数学函数"><a href="#新的数学函数" class="headerlink" title="新的数学函数"></a>新的数学函数</h4><p><code>todo...</code></p>
-<h4 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h4><p><code>todo...</code></p>
+<h4 id="新的数学函数"><a href="#新的数学函数" class="headerlink" title="新的数学函数"></a>新的数学函数</h4><h4 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h4><p><code>todo...</code></p>
 <h4 id="使用文件"><a href="#使用文件" class="headerlink" title="使用文件"></a>使用文件</h4><p><code>todo...</code></p>
 <h4 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h4><p><code>todo...</code></p>
 <h4 id="其他一些细微的改进"><a href="#其他一些细微的改进" class="headerlink" title="其他一些细微的改进"></a>其他一些细微的改进</h4><p><code>todo...</code></p>
@@ -347,6 +346,10 @@ System.out.println(ids);// 在我的电脑上：Asia/Aden, America/Cuiaba, Etc/G
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/10/哎呦，晴天哦/" rel="prev" title="哎呦，晴天哦">
+                哎呦，晴天哦 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -418,7 +421,7 @@ System.out.println(ids);// 在我的电脑上：Asia/Aden, America/Cuiaba, Etc/G
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-count">13</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
