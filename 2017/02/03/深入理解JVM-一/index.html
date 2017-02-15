@@ -64,7 +64,7 @@
 <meta property="og:site_name" content="昆仑子的一亩三分地">
 <meta property="og:description" content="写在前面的话Java虚拟机提供了Java class文件的运行时环境，java的平台无关性、语言无关都是依赖于不同平台的JVM实现屏蔽了操作系统的底层差异、以及制定的class文件标准。">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/a1d44fefgy1fce5xu1r4oj20d70b2q4b">
-<meta property="og:updated_time" content="2017-02-07T13:26:23.000Z">
+<meta property="og:updated_time" content="2017-02-09T14:55:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解JVM(一)">
 <meta name="twitter:description" content="写在前面的话Java虚拟机提供了Java class文件的运行时环境，java的平台无关性、语言无关都是依赖于不同平台的JVM实现屏蔽了操作系统的底层差异、以及制定的class文件标准。">
@@ -376,11 +376,7 @@
 <p>标记-整理（Mark-Compact）算法：标记过程仍然与“标记-清除”算法一样，但后续步骤不是直接对可回收对象进行清理，而是让所有存活对象都向一端移动，然后直接清理掉端边界以外的内存。</p>
 <h3 id="分代收集算法"><a href="#分代收集算法" class="headerlink" title="分代收集算法"></a>分代收集算法</h3><p>当前商业虚拟机的垃圾收集都采用“分代收集”（Generational Collection ）算法，就是根据对象存活周期的不同将内存分为几块。一般是把Java堆分为新生代和老年代，这样就可以根据不同区域的对象存活特点采用最适当的收集算法。</p>
 <p>在新生代中，每次垃圾收集时都发现又大批对象死去，只有少量存活，因此选用复制算法，只需复制少量存活对象即可。而老年代因为对象存活率高、没有额外空间对它进行分配担保，就使用“标记-整理”或“标记-清理”算法来回收。</p>
-<!-- ## 垃圾收集器
-
-
-# JDK自带工具 -->
-
+<h2 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h2><h1 id="JDK自带工具"><a href="#JDK自带工具" class="headerlink" title="JDK自带工具"></a>JDK自带工具</h1>
       
     </div>
 
@@ -408,6 +404,10 @@
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/15/玻璃心的碎碎念/" rel="prev" title="玻璃心的碎碎念">
+                玻璃心的碎碎念 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -479,7 +479,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -529,7 +529,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写在前面的话"><span class="nav-number">1.</span> <span class="nav-text">写在前面的话</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JVM内存模型"><span class="nav-number">2.</span> <span class="nav-text">JVM内存模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#程序计数器-（Program-Counter-Register）"><span class="nav-number">2.1.</span> <span class="nav-text">程序计数器 （Program Counter Register）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java虚拟机栈（Java-Virtual-Machine-Stacks）"><span class="nav-number">2.2.</span> <span class="nav-text">Java虚拟机栈（Java Virtual Machine Stacks）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本地方法栈-（Native-Method-Stack）"><span class="nav-number">2.3.</span> <span class="nav-text">本地方法栈 （Native Method Stack）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java堆（Java-Heap）"><span class="nav-number">2.4.</span> <span class="nav-text">Java堆（Java Heap）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法区（Method-Area）"><span class="nav-number">2.5.</span> <span class="nav-text">方法区（Method Area）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行时常量池"><span class="nav-number">2.6.</span> <span class="nav-text">运行时常量池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#直接内存（Direct-Memory）"><span class="nav-number">2.7.</span> <span class="nav-text">直接内存（Direct Memory）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#垃圾收集与内存分配"><span class="nav-number">3.</span> <span class="nav-text">垃圾收集与内存分配</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#哪些对象需要回收"><span class="nav-number">3.1.</span> <span class="nav-text">哪些对象需要回收</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#引用计数法"><span class="nav-number">3.1.1.</span> <span class="nav-text">引用计数法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可达性分析算法"><span class="nav-number">3.1.2.</span> <span class="nav-text">可达性分析算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法区的回收"><span class="nav-number">3.1.3.</span> <span class="nav-text">方法区的回收</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#垃圾收集算法"><span class="nav-number">3.2.</span> <span class="nav-text">垃圾收集算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#标记-清除算法"><span class="nav-number">3.2.1.</span> <span class="nav-text">标记-清除算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复制算法"><span class="nav-number">3.2.2.</span> <span class="nav-text">复制算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标记-整理算法"><span class="nav-number">3.2.3.</span> <span class="nav-text">标记-整理算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分代收集算法"><span class="nav-number">3.2.4.</span> <span class="nav-text">分代收集算法</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写在前面的话"><span class="nav-number">1.</span> <span class="nav-text">写在前面的话</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JVM内存模型"><span class="nav-number">2.</span> <span class="nav-text">JVM内存模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#程序计数器-（Program-Counter-Register）"><span class="nav-number">2.1.</span> <span class="nav-text">程序计数器 （Program Counter Register）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java虚拟机栈（Java-Virtual-Machine-Stacks）"><span class="nav-number">2.2.</span> <span class="nav-text">Java虚拟机栈（Java Virtual Machine Stacks）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本地方法栈-（Native-Method-Stack）"><span class="nav-number">2.3.</span> <span class="nav-text">本地方法栈 （Native Method Stack）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java堆（Java-Heap）"><span class="nav-number">2.4.</span> <span class="nav-text">Java堆（Java Heap）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法区（Method-Area）"><span class="nav-number">2.5.</span> <span class="nav-text">方法区（Method Area）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行时常量池"><span class="nav-number">2.6.</span> <span class="nav-text">运行时常量池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#直接内存（Direct-Memory）"><span class="nav-number">2.7.</span> <span class="nav-text">直接内存（Direct Memory）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#垃圾收集与内存分配"><span class="nav-number">3.</span> <span class="nav-text">垃圾收集与内存分配</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#哪些对象需要回收"><span class="nav-number">3.1.</span> <span class="nav-text">哪些对象需要回收</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#引用计数法"><span class="nav-number">3.1.1.</span> <span class="nav-text">引用计数法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可达性分析算法"><span class="nav-number">3.1.2.</span> <span class="nav-text">可达性分析算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法区的回收"><span class="nav-number">3.1.3.</span> <span class="nav-text">方法区的回收</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#垃圾收集算法"><span class="nav-number">3.2.</span> <span class="nav-text">垃圾收集算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#标记-清除算法"><span class="nav-number">3.2.1.</span> <span class="nav-text">标记-清除算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复制算法"><span class="nav-number">3.2.2.</span> <span class="nav-text">复制算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标记-整理算法"><span class="nav-number">3.2.3.</span> <span class="nav-text">标记-整理算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分代收集算法"><span class="nav-number">3.2.4.</span> <span class="nav-text">分代收集算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#垃圾收集器"><span class="nav-number">3.3.</span> <span class="nav-text">垃圾收集器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JDK自带工具"><span class="nav-number">4.</span> <span class="nav-text">JDK自带工具</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
