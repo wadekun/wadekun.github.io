@@ -64,7 +64,8 @@
 <meta property="og:site_name" content="昆仑子的一亩三分地">
 <meta property="og:description" content="写在前面的话Java虚拟机提供了Java class文件的运行时环境，java的平台无关性、语言无关都是依赖于不同平台的JVM实现屏蔽了操作系统的底层差异、以及制定的class文件标准。">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/a1d44fefgy1fce5xu1r4oj20d70b2q4b">
-<meta property="og:updated_time" content="2017-02-09T14:55:25.000Z">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/a1d44fefgy1fcttvfgg50j20f70aeaab">
+<meta property="og:updated_time" content="2017-02-17T14:41:56.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解JVM(一)">
 <meta name="twitter:description" content="写在前面的话Java虚拟机提供了Java class文件的运行时环境，java的平台无关性、语言无关都是依赖于不同平台的JVM实现屏蔽了操作系统的底层差异、以及制定的class文件标准。">
@@ -376,7 +377,33 @@
 <p>标记-整理（Mark-Compact）算法：标记过程仍然与“标记-清除”算法一样，但后续步骤不是直接对可回收对象进行清理，而是让所有存活对象都向一端移动，然后直接清理掉端边界以外的内存。</p>
 <h3 id="分代收集算法"><a href="#分代收集算法" class="headerlink" title="分代收集算法"></a>分代收集算法</h3><p>当前商业虚拟机的垃圾收集都采用“分代收集”（Generational Collection ）算法，就是根据对象存活周期的不同将内存分为几块。一般是把Java堆分为新生代和老年代，这样就可以根据不同区域的对象存活特点采用最适当的收集算法。</p>
 <p>在新生代中，每次垃圾收集时都发现又大批对象死去，只有少量存活，因此选用复制算法，只需复制少量存活对象即可。而老年代因为对象存活率高、没有额外空间对它进行分配担保，就使用“标记-整理”或“标记-清理”算法来回收。</p>
-<h2 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h2><h1 id="JDK自带工具"><a href="#JDK自带工具" class="headerlink" title="JDK自带工具"></a>JDK自带工具</h1>
+<h2 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h2><p><img src="http://ww1.sinaimg.cn/large/a1d44fefgy1fcttvfgg50j20f70aeaab" alt=""><br>使用 <code>-XX:+PrintCommandLineFlags</code> 显示当前使用的收集器</p>
+<h1 id="JDK自带工具"><a href="#JDK自带工具" class="headerlink" title="JDK自带工具"></a>JDK自带工具</h1><ul>
+<li>jps [-l] [-v] 显示正在运行的虚拟机进程</li>
+<li>jstat 用于监视虚拟机各种运行状态信息<br><code>jstat -gc 2764 500 20</code> 每500毫秒查询一次进程2764的垃圾收集状况，一共查询20次  <ul>
+<li>-class 监视类装载、卸载、总空间以及类装载所耗费的时间</li>
+<li>-compiler 输出JIT编译期编译过的方法、耗时时间</li>
+<li>-gcutil 监视内容与-gc基本相同，但输出主要关注已使用空间占总空间的百分比</li>
+<li>-gccause 与-gcutil功能一样，但是会额外输出导致上一次GC产生的原因</li>
+</ul>
+</li>
+<li>jinfo 实时的查看虚拟机的各项参数<br><code>jinfo -flag CMSInitiatingOccupancyFraction 1444</code> 查看CMS收集器出发FULL GC的老年代占用百分比</li>
+<li>jmap Java内存映像工具<br><code>jmap [options] vmid</code><ul>
+<li>-dump 生成Java堆转储快照</li>
+<li>-heap 显示Java堆详细信息，如使用哪种回收器、参数配置、分代状况。只在Linux/Solaris平台下有效</li>
+<li>-F 当虚拟机进程对 -dump 选项没有响应时，强制生成dump快照。只在 Linux/Solaris 平台下有效</li>
+</ul>
+</li>
+<li>jhat 虚拟机堆转储快照分析工具</li>
+<li>jstack java堆栈跟踪工具（生成当前线程快照）<ul>
+<li><code>jstack 2222 &gt; stack.log</code> 生成进程2222的快照，保存到stack.log文件中</li>
+<li>-F 当正常输出的请求不被响应时，强制输出线程堆栈</li>
+<li>-l 除堆栈外，显示关于锁的附加信息</li>
+<li>-m 如果调用到本地方法的话，可以显示C/C++ 的堆栈  </li>
+</ul>
+</li>
+</ul>
+
       
     </div>
 
@@ -404,6 +431,10 @@
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/17/Java-并发编程/" rel="prev" title="Java 并发编程知识整理">
+                Java 并发编程知识整理 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -475,7 +506,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -492,7 +523,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

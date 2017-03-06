@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="随笔," />
+  <meta name="keywords" content="Java,多线程,并发编程,读书," />
 
 
 
@@ -57,20 +57,58 @@
 
 
 
-<meta name="description" content="一时兴起，又把博客搞起来了，之前是写了删，删了写。总觉的想写的东西都被大牛们写完了。前两天看到一个ACMer的博客，顿生敬意，因为大多数讲算法的都看不懂，我啥时候算法也能这么屌就好了，就这么突然又萌生了把blog写起来的想法，纪录下自己的一些想法，做一做学习笔记，日后看起来也许会觉得很有趣。也许也是因为最近确实心烦。就以这篇为开始吧，我会经常更的。
-若得心事如常诉，谁肯一生扮疏狂">
+<meta name="description" content="概念
+线程安全    
+
+当多个线程访问某个类时，不管按此用何种调度方式，并且在主调代码中不需要任何额外的同步或者协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。
+
+
+可见性    
+
+一个线程堆内存的修改可以被其他线程感知。
+
+
+竞态条件   
+
+在并发编程中，由于不恰当的执行时序而出现不正确的结果的情况称为为竞态条件（或者说对线程的执行顺序敏感，不同的执行顺序会出现不同的值，从而">
 <meta property="og:type" content="article">
-<meta property="og:title" content="我的第一篇文章">
-<meta property="og:url" content="http://wadekun.github.io/2016/02/25/第一篇博客/index.html">
+<meta property="og:title" content="Java 并发编程知识整理">
+<meta property="og:url" content="http://wadekun.github.io/2017/02/17/Java-并发编程/index.html">
 <meta property="og:site_name" content="昆仑子的一亩三分地">
-<meta property="og:description" content="一时兴起，又把博客搞起来了，之前是写了删，删了写。总觉的想写的东西都被大牛们写完了。前两天看到一个ACMer的博客，顿生敬意，因为大多数讲算法的都看不懂，我啥时候算法也能这么屌就好了，就这么突然又萌生了把blog写起来的想法，纪录下自己的一些想法，做一做学习笔记，日后看起来也许会觉得很有趣。也许也是因为最近确实心烦。就以这篇为开始吧，我会经常更的。
-若得心事如常诉，谁肯一生扮疏狂">
-<meta property="og:image" content="http://ww3.sinaimg.cn/large/a1d44fefgw1f1fgbogxj9j20j609rmye.jpg">
-<meta property="og:updated_time" content="2016-03-07T15:52:26.000Z">
+<meta property="og:description" content="概念
+线程安全    
+
+当多个线程访问某个类时，不管按此用何种调度方式，并且在主调代码中不需要任何额外的同步或者协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。
+
+
+可见性    
+
+一个线程堆内存的修改可以被其他线程感知。
+
+
+竞态条件   
+
+在并发编程中，由于不恰当的执行时序而出现不正确的结果的情况称为为竞态条件（或者说对线程的执行顺序敏感，不同的执行顺序会出现不同的值，从而">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/a1d44fefgy1fdcxsi1w3jj20d40i4js9">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/a1d44fefgy1fdcz6ysx0fj21ae0tgjxi">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/a1d44fefly1fdczh36cauj20vu0cun0e">
+<meta property="og:updated_time" content="2017-03-06T04:29:38.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="我的第一篇文章">
-<meta name="twitter:description" content="一时兴起，又把博客搞起来了，之前是写了删，删了写。总觉的想写的东西都被大牛们写完了。前两天看到一个ACMer的博客，顿生敬意，因为大多数讲算法的都看不懂，我啥时候算法也能这么屌就好了，就这么突然又萌生了把blog写起来的想法，纪录下自己的一些想法，做一做学习笔记，日后看起来也许会觉得很有趣。也许也是因为最近确实心烦。就以这篇为开始吧，我会经常更的。
-若得心事如常诉，谁肯一生扮疏狂">
+<meta name="twitter:title" content="Java 并发编程知识整理">
+<meta name="twitter:description" content="概念
+线程安全    
+
+当多个线程访问某个类时，不管按此用何种调度方式，并且在主调代码中不需要任何额外的同步或者协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。
+
+
+可见性    
+
+一个线程堆内存的修改可以被其他线程感知。
+
+
+竞态条件   
+
+在并发编程中，由于不恰当的执行时序而出现不正确的结果的情况称为为竞态条件（或者说对线程的执行顺序敏感，不同的执行顺序会出现不同的值，从而">
 
 
 
@@ -88,7 +126,7 @@
   };
 </script>
 
-  <title> 我的第一篇文章 | 昆仑子的一亩三分地 </title>
+  <title> Java 并发编程知识整理 | 昆仑子的一亩三分地 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -237,7 +275,7 @@
             
             
               
-                我的第一篇文章
+                Java 并发编程知识整理
               
             
           </h1>
@@ -249,8 +287,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-02-25T20:13:46+08:00" content="2016-02-25">
-              2016-02-25
+            <time itemprop="dateCreated" datetime="2017-02-17T21:13:58+08:00" content="2017-02-17">
+              2017-02-17
             </time>
           </span>
 
@@ -263,8 +301,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/随笔/" itemprop="url" rel="index">
-                    <span itemprop="name">随笔</span>
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
                   </a>
                 </span>
 
@@ -279,8 +317,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/02/25/第一篇博客/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/25/第一篇博客/" itemprop="commentsCount"></span>
+                <a href="/2017/02/17/Java-并发编程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/17/Java-并发编程/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -301,18 +339,67 @@
       
 
       
-        <hr>
-<p>一时兴起，又把博客搞起来了，之前是写了删，删了写。总觉的想写的东西都被大牛们写完了。前两天看到一个ACMer的博客，顿生敬意，因为大多数讲算法的都看不懂，我啥时候算法也能这么屌就好了，就这么突然又萌生了把blog写起来的想法，纪录下自己的一些想法，做一做学习笔记，日后看起来也许会觉得很有趣。也许也是因为最近确实心烦。就以这篇为开始吧，我会经常更的。</p>
-<h4 id="若得心事如常诉，谁肯一生扮疏狂"><a href="#若得心事如常诉，谁肯一生扮疏狂" class="headerlink" title="若得心事如常诉，谁肯一生扮疏狂"></a>若得心事如常诉，谁肯一生扮疏狂</h4><p><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="60" height="5" src="http://music.163.com/outchain/player?type=2&id=610661&auto=1&height=66"></iframe><br><a id="more"></a></p>
-<h4 id="反省一下"><a href="#反省一下" class="headerlink" title="反省一下"></a>反省一下</h4><p>毕业快三年了，这三年学到了很多，貌似也丢掉了很多。想起实习的那段时间，别人都出去工作了，我还一个人每天起早背着电脑傻乎乎的跑到教室去看书，撸码，心里就一个念头，老子就要当程序员了，从没有对这条路的任何怀疑。然而现在，那种坚定逐渐消失了。选择了一条路，却不敢迈步去走，迟疑不决。大概是瞎忙了这么久，忘了自己要的是什么。<br>做事三思而后行。三思而后行。三思而后行。<br>多做事，少说话。要说等事情完成了再说（至少有个可行方案吧）。   </p>
-<h4 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h4><p>计算机程序最喜欢处理结构化的数据，人脑也一样，碎片化的数据不容易处理，不容易记忆。所以要尽量让自己的知识技能体系化。以后会经常做些学习笔记，将所学的纪录下来，以备以后回顾。如果有幸被别人看到获益的话，那更是值得了。当然如果被各路大神路过拍砖那也是会获益的嘛(😂)。</p>
-<h4 id="读书"><a href="#读书" class="headerlink" title="读书"></a>读书</h4><p>读书可以医愚，这是真的。和经常读书的人聊天与不读书的人聊天，会有不一样的感觉。<br>书中自有黄金屋，书中自有颜如玉。。。这是谁说的，给我站出来(😭)，告诉我黄金屋颜如玉在哪。</p>
-<h4 id="电影"><a href="#电影" class="headerlink" title="电影"></a>电影</h4><p>读书是与书的作者一个人对话，看电影则是与 编剧，导演，演员等众人对话。多看些好的电影，对自己也是极好的。</p>
-<h4 id="运动"><a href="#运动" class="headerlink" title="运动"></a>运动</h4><p>这就更不用说了。以后每周都去打打篮球、跑跑步吧。足球嘛。。之前说过要成为很牛逼的边锋，估计找到颜如玉也不太可能实现了。</p>
-<h4 id="旅行"><a href="#旅行" class="headerlink" title="旅行"></a>旅行</h4><p>读万卷书不如行万里路，行万里路不如阅人无数。还是有些道理的，尤其在中国。领略下祖国的大好河山，适当的放松下。现在的城市太浮躁，待得久了难免人也变得的浮躁起来。</p>
-<h4 id="涨姿势"><a href="#涨姿势" class="headerlink" title="涨姿势"></a>涨姿势</h4><p>其实就是最新的一些科研成果吧，没办法，就是对这些高大上的东西感兴趣，虽然是似懂非懂啦。比如物理学吧，我一直觉得物理是最根本的科学，探寻这个世界的真谛，这个世界是由什么组成的，这个宇宙是怎么来的，物质的运动规律，有时候研究着研究着物理学家们自己也整懵逼了。。。真的要向这些默默奉献于学术研究的科学家致敬。前阵子轰动的引力波，有空好好了解下。<br><img src="http://ww3.sinaimg.cn/large/a1d44fefgw1f1fgbogxj9j20j609rmye.jpg" alt=""></p>
-<h4 id="脑洞"><a href="#脑洞" class="headerlink" title="脑洞"></a>脑洞</h4><p>宇宙的年龄是130亿年，地球的年龄才大概45.4亿年，宇宙无可计数的小星系，完全有可能有比我们更先进的文明存在，也许早就找到我们，为何却迟迟没有现身。。有没有想过我们的世界是虚拟的？有人（或者说另外的生物）在控制着整个所谓的宇宙，从爆炸到所有的能源耗尽，再次爆炸，不停的做着一样的实验（这个是前几天在知乎上看到的，翻了半天没找到原文）。现在人类在不停的探寻宇宙的奥秘，引力波已经被发现了，也许就快要发现我们这个虚拟世界的事实，这样的话，宇宙的控制者们也许就要开始下一轮的新实验了，所以现在终结这个命运的话，就要加快发展科技，找到回到过去的方式，回到宇宙爆炸前，把控制者们终结掉。。😄，这个脑洞好大，我自己都不敢信。</p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>好久没有写东西了，感觉语无伦次，不知道如何组织语言。没关系，慢慢来吧…</p>
+        <h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><ol>
+<li><p>线程安全    </p>
+<blockquote>
+<p>当多个线程访问某个类时，不管按此用何种调度方式，并且在主调代码中不需要任何额外的同步或者协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。</p>
+</blockquote>
+</li>
+<li><p>可见性    </p>
+<blockquote>
+<p>一个线程堆内存的修改可以被其他线程感知。</p>
+</blockquote>
+</li>
+<li><p>竞态条件   </p>
+<blockquote>
+<p>在并发编程中，由于不恰当的执行时序而出现不正确的结果的情况称为为竞态条件（或者说对线程的执行顺序敏感，不同的执行顺序会出现不同的值，从而出现不可预知的情况）。</p>
+</blockquote>
+</li>
+</ol>
+<h1 id="基础构建模块"><a href="#基础构建模块" class="headerlink" title="基础构建模块"></a>基础构建模块</h1><p>jdk中封装了一些多线程工具类，供开发者开发线程安全的系统。</p>
+<p>这些工具包括：   </p>
+<ul>
+<li>同步容器：所有的操作都是同步(synchronized)的</li>
+<li>并发容器：提供了高效的线程安全的符合操作API</li>
+<li>同步工具：用于线程之间的协调操作</li>
+</ul>
+<h2 id="同步容器类"><a href="#同步容器类" class="headerlink" title="同步容器类"></a>同步容器类</h2><ul>
+<li>Vector</li>
+<li>HashTable</li>
+</ul>
+<h2 id="并发容器"><a href="#并发容器" class="headerlink" title="并发容器"></a>并发容器</h2><ul>
+<li>CurrentHashMap 并发HashMap</li>
+<li>CopyOnWriteArrayList</li>
+<li>Queue<ul>
+<li>ConcurrentLinkedQueue 并发队列链表实现</li>
+<li>BlockingQueue 阻塞队列，可用于构建消费者生产者模式（take/put）</li>
+</ul>
+</li>
+</ul>
+<h2 id="同步工具"><a href="#同步工具" class="headerlink" title="同步工具"></a>同步工具</h2><ul>
+<li>CountDownLatch 闭锁，等待某一组条件发生(countDown/await)</li>
+<li>Semaphore 信号量，空着操作某个资源的线程数量(acquire/release)</li>
+<li>CyclicBarrier 栅栏，所有线程到达同意位置，可重置（await/reset）</li>
+</ul>
+<h1 id="并发任务执行"><a href="#并发任务执行" class="headerlink" title="并发任务执行"></a>并发任务执行</h1><p>在并发执行任务的场景中，通常需要创建大量的线程去并发执行这些任务。无限制创建线程可能带来的问题：    </p>
+<ul>
+<li>线程生命周期的开销非常高</li>
+<li>资源消耗<br>活跃的线程会消耗系统资源，尤其是内存。如果可运行的线程数量多于可用处理器的数量，那么有些线程会闲置。大量的空闲线程会占用许多内存，给垃圾收集器带来压力，并且大量线程竞争CPU资源时还将产生其他的性能开销。此时无限制的的创建线程反而会降低性能。   </li>
+<li>稳定性<br>无限制的创建线程可能导致OOM。</li>
+</ul>
+<h2 id="Executor框架与线程池"><a href="#Executor框架与线程池" class="headerlink" title="Executor框架与线程池"></a>Executor框架与线程池</h2><p>为了避免无限制创建线程所带来的问题，Java提供了Executor框架，来并发执行异步任务。<br><img src="http://ww1.sinaimg.cn/large/a1d44fefgy1fdcxsi1w3jj20d40i4js9" alt=""><br><img src="http://ww1.sinaimg.cn/large/a1d44fefgy1fdcz6ysx0fj21ae0tgjxi" alt=""></p>
+<p><code>Executor</code>允许你指定自己的任务执行策略，包括：</p>
+<ul>
+<li>在什么（What）线程中执行任务？（ThreadFactory）</li>
+<li>任务按照什么（What）顺序（FIFO、LIFO、优先级）执行？</li>
+<li>在队列中有多少个（How Many）任务在等待执行？</li>
+<li>如果系统由于过载而需要拒绝一个任务，那么应该选择哪一个（Which）任务</li>
+</ul>
+<p>可以通过<code>Executors</code>的静态方法，创建不同策略的<code>Executor</code><br><img src="http://ww1.sinaimg.cn/large/a1d44fefly1fdczh36cauj20vu0cun0e" alt=""></p>
+<h2 id="任务取消与关闭"><a href="#任务取消与关闭" class="headerlink" title="任务取消与关闭"></a>任务取消与关闭</h2><p>通常会遇到提前结束正在执行的任务，例如用户取消操作，应用提前关闭等。Java没有提供任何机制来安全的关闭线程。<br><code>Thread.stop</code>与<code>Thread.suspend</code>提供了这样的机制，但却有缺陷。<code>Thread.stop</code>会抛出一个<code>ThreadDeath</code>错误，导致当前线程被立即停止，当前线程持有的锁所保护的状态变量此时可能处于不一致的状态，而对其他线程可见，造成不可预知的线程安全问题。<code>Thread.suspend</code>与<code>Thread.resume</code>配合使用时，很容易造成死锁，<code>Thread.suspend</code>的线程被终止前如果持有一个锁，而调用<code>Thread.resume</code>试图恢复该线程的线程如果正在尝试获取这个锁，那么将发生死锁。</p>
+<p>可以使用线程的中断机制来实现线程的优雅停止。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class Thread &#123;&#10;  // &#20013;&#26029;&#24403;&#21069;&#32447;&#31243;&#65292;&#35774;&#32622;&#20013;&#26029;&#29366;&#24577;&#10;  public void interrupt() &#123;&#125;&#10;  // &#26816;&#27979;&#24403;&#21069;&#32447;&#31243;&#26159;&#21542;&#34987;&#20013;&#26029;&#10;  public void isInterrupted() &#123;&#125;&#10;  // &#26816;&#27979;&#24403;&#21069;&#30340;&#20013;&#26029;&#29366;&#24577;&#65292;&#22914;&#26524;&#34987;&#20013;&#26029;&#65292;&#21017;&#37325;&#32622;&#20013;&#26029;&#29366;&#24577;&#20026;&#26410;&#20013;&#26029;  &#10;  public static boolean interrupted() &#123;&#125;    &#10;&#125;</span><br></pre></td></tr></table></figure></p>
+<!-- # 高级主题 -->
+<!-- ## 显示锁 -->
 
       
     </div>
@@ -321,7 +408,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/随笔/" rel="tag">#随笔</a>
+            <a href="/tags/Java/" rel="tag">#Java</a>
+          
+            <a href="/tags/多线程/" rel="tag">#多线程</a>
+          
+            <a href="/tags/并发编程/" rel="tag">#并发编程</a>
+          
+            <a href="/tags/读书/" rel="tag">#读书</a>
           
         </div>
       
@@ -330,13 +423,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/02/03/深入理解JVM-一/" rel="next" title="深入理解JVM(一)">
+                <i class="fa fa-chevron-left"></i> 深入理解JVM(一)
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/02/27/程序猿的技术栈/" rel="prev" title="程序猿的技术栈">
-                程序猿的技术栈 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -362,8 +455,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/02/25/第一篇博客/"
-           data-title="我的第一篇文章" data-url="http://wadekun.github.io/2016/02/25/第一篇博客/">
+      <div class="ds-thread" data-thread-key="2017/02/17/Java-并发编程/"
+           data-title="Java 并发编程知识整理" data-url="http://wadekun.github.io/2017/02/17/Java-并发编程/">
       </div>
     
   </div>
@@ -458,7 +551,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#若得心事如常诉，谁肯一生扮疏狂"><span class="nav-number">1.</span> <span class="nav-text">若得心事如常诉，谁肯一生扮疏狂</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#反省一下"><span class="nav-number">2.</span> <span class="nav-text">反省一下</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#技术"><span class="nav-number">3.</span> <span class="nav-text">技术</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#读书"><span class="nav-number">4.</span> <span class="nav-text">读书</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#电影"><span class="nav-number">5.</span> <span class="nav-text">电影</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运动"><span class="nav-number">6.</span> <span class="nav-text">运动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#旅行"><span class="nav-number">7.</span> <span class="nav-text">旅行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#涨姿势"><span class="nav-number">8.</span> <span class="nav-text">涨姿势</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#脑洞"><span class="nav-number">9.</span> <span class="nav-text">脑洞</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">10.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概念"><span class="nav-number">1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基础构建模块"><span class="nav-number">2.</span> <span class="nav-text">基础构建模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#同步容器类"><span class="nav-number">2.1.</span> <span class="nav-text">同步容器类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并发容器"><span class="nav-number">2.2.</span> <span class="nav-text">并发容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步工具"><span class="nav-number">2.3.</span> <span class="nav-text">同步工具</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#并发任务执行"><span class="nav-number">3.</span> <span class="nav-text">并发任务执行</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Executor框架与线程池"><span class="nav-number">3.1.</span> <span class="nav-text">Executor框架与线程池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#任务取消与关闭"><span class="nav-number">3.2.</span> <span class="nav-text">任务取消与关闭</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

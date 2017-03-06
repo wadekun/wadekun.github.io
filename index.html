@@ -218,15 +218,176 @@
 
     
     
+
+    
       
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/17/Java-并发编程/" itemprop="url">
+                  Java 并发编程知识整理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-17T21:13:58+08:00" content="2017-02-17">
+              2017-02-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/17/Java-并发编程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/17/Java-并发编程/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
       
-        
-        
-        
       
 
       
-    
+        
+          
+            <h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><ol>
+<li><p>线程安全    </p>
+<blockquote>
+<p>当多个线程访问某个类时，不管按此用何种调度方式，并且在主调代码中不需要任何额外的同步或者协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。</p>
+</blockquote>
+</li>
+<li><p>可见性    </p>
+<blockquote>
+<p>一个线程堆内存的修改可以被其他线程感知。</p>
+</blockquote>
+</li>
+<li><p>竞态条件   </p>
+<blockquote>
+<p>在并发编程中，由于不恰当的执行时序而出现不正确的结果的情况称为为竞态条件（或者说对线程的执行顺序敏感，不同的执行顺序会出现不同的值，从而出现不可预知的情况）。</p>
+</blockquote>
+</li>
+</ol>
+<h1 id="基础构建模块"><a href="#基础构建模块" class="headerlink" title="基础构建模块"></a>基础构建模块</h1><p>jdk中封装了一些多线程工具类，供开发者开发线程安全的系统。</p>
+<p>这些工具包括：   </p>
+<ul>
+<li>同步容器：所有的操作都是同步(synchronized)的</li>
+<li>并发容器：提供了高效的线程安全的符合操作API</li>
+<li>同步工具：用于线程之间的协调操作</li>
+</ul>
+<h2 id="同步容器类"><a href="#同步容器类" class="headerlink" title="同步容器类"></a>同步容器类</h2><ul>
+<li>Vector</li>
+<li>HashTable</li>
+</ul>
+<h2 id="并发容器"><a href="#并发容器" class="headerlink" title="并发容器"></a>并发容器</h2><ul>
+<li>CurrentHashMap 并发HashMap</li>
+<li>CopyOnWriteArrayList</li>
+<li>Queue<ul>
+<li>ConcurrentLinkedQueue 并发队列链表实现</li>
+<li>BlockingQueue 阻塞队列，可用于构建消费者生产者模式（take/put）</li>
+</ul>
+</li>
+</ul>
+<h2 id="同步工具"><a href="#同步工具" class="headerlink" title="同步工具"></a>同步工具</h2><ul>
+<li>CountDownLatch 闭锁，等待某一组条件发生(countDown/await)</li>
+<li>Semaphore 信号量，空着操作某个资源的线程数量(acquire/release)</li>
+<li>CyclicBarrier 栅栏，所有线程到达同意位置，可重置（await/reset）</li>
+</ul>
+<h1 id="并发任务执行"><a href="#并发任务执行" class="headerlink" title="并发任务执行"></a>并发任务执行</h1><p>在并发执行任务的场景中，通常需要创建大量的线程去并发执行这些任务。无限制创建线程可能带来的问题：    </p>
+<ul>
+<li>线程生命周期的开销非常高</li>
+<li>资源消耗<br>活跃的线程会消耗系统资源，尤其是内存。如果可运行的线程数量多于可用处理器的数量，那么有些线程会闲置。大量的空闲线程会占用许多内存，给垃圾收集器带来压力，并且大量线程竞争CPU资源时还将产生其他的性能开销。此时无限制的的创建线程反而会降低性能。   </li>
+<li>稳定性<br>无限制的创建线程可能导致OOM。</li>
+</ul>
+<h2 id="Executor框架与线程池"><a href="#Executor框架与线程池" class="headerlink" title="Executor框架与线程池"></a>Executor框架与线程池</h2><p>为了避免无限制创建线程所带来的问题，Java提供了Executor框架，来并发执行异步任务。<br><img src="http://ww1.sinaimg.cn/large/a1d44fefgy1fdcxsi1w3jj20d40i4js9" alt=""><br><img src="http://ww1.sinaimg.cn/large/a1d44fefgy1fdcz6ysx0fj21ae0tgjxi" alt=""></p>
+<p><code>Executor</code>允许你指定自己的任务执行策略，包括：</p>
+<ul>
+<li>在什么（What）线程中执行任务？（ThreadFactory）</li>
+<li>任务按照什么（What）顺序（FIFO、LIFO、优先级）执行？</li>
+<li>在队列中有多少个（How Many）任务在等待执行？</li>
+<li>如果系统由于过载而需要拒绝一个任务，那么应该选择哪一个（Which）任务</li>
+</ul>
+<p>可以通过<code>Executors</code>的静态方法，创建不同策略的<code>Executor</code><br><img src="http://ww1.sinaimg.cn/large/a1d44fefly1fdczh36cauj20vu0cun0e" alt=""></p>
+<h2 id="任务取消与关闭"><a href="#任务取消与关闭" class="headerlink" title="任务取消与关闭"></a>任务取消与关闭</h2><p>通常会遇到提前结束正在执行的任务，例如用户取消操作，应用提前关闭等。Java没有提供任何机制来安全的关闭线程。<br><code>Thread.stop</code>与<code>Thread.suspend</code>提供了这样的机制，但却有缺陷。<code>Thread.stop</code>会抛出一个<code>ThreadDeath</code>错误，导致当前线程被立即停止，当前线程持有的锁所保护的状态变量此时可能处于不一致的状态，而对其他线程可见，造成不可预知的线程安全问题。<code>Thread.suspend</code>与<code>Thread.resume</code>配合使用时，很容易造成死锁，<code>Thread.suspend</code>的线程被终止前如果持有一个锁，而调用<code>Thread.resume</code>试图恢复该线程的线程如果正在尝试获取这个锁，那么将发生死锁。</p>
+<p>可以使用线程的中断机制来实现线程的优雅停止。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class Thread &#123;&#10;  // &#20013;&#26029;&#24403;&#21069;&#32447;&#31243;&#65292;&#35774;&#32622;&#20013;&#26029;&#29366;&#24577;&#10;  public void interrupt() &#123;&#125;&#10;  // &#26816;&#27979;&#24403;&#21069;&#32447;&#31243;&#26159;&#21542;&#34987;&#20013;&#26029;&#10;  public void isInterrupted() &#123;&#125;&#10;  // &#26816;&#27979;&#24403;&#21069;&#30340;&#20013;&#26029;&#29366;&#24577;&#65292;&#22914;&#26524;&#34987;&#20013;&#26029;&#65292;&#21017;&#37325;&#32622;&#20013;&#26029;&#29366;&#24577;&#20026;&#26410;&#20013;&#26029;  &#10;  public static boolean interrupted() &#123;&#125;    &#10;&#125;</span><br></pre></td></tr></table></figure></p>
+<!-- # 高级主题 -->
+<!-- ## 显示锁 -->
+
+          
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
 
     
       
@@ -320,6 +481,121 @@
           <h1 id="写在前面的话"><a href="#写在前面的话" class="headerlink" title="写在前面的话"></a>写在前面的话</h1><p>Java虚拟机提供了Java class文件的运行时环境，java的平台无关性、语言无关都是依赖于不同平台的JVM实现屏蔽了操作系统的底层差异、以及制定的class文件标准。</p>
           <div class="post-more-link text-center">
             <a class="btn" href="/2017/02/03/深入理解JVM-一/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/12/31/2016-SUMMARY/" itemprop="url">
+                  2016 SUMMARY
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-12-31T23:32:21+08:00" content="2016-12-31">
+              2016-12-31
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/随笔/" itemprop="url" rel="index">
+                    <span itemprop="name">随笔</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/12/31/2016-SUMMARY/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/31/2016-SUMMARY/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="100" height="5" src="//music.163.com/outchain/player?type=2&id=440241144&auto=1&height=66"></iframe>
+
+<h1 id="年终小感想"><a href="#年终小感想" class="headerlink" title="年终小感想"></a>年终小感想</h1><p>在我开始写这篇文章的时候，2016年还剩下不到15分钟了。</p>
+<p>时间过的可真是快，github博客开了快一年了。怎么感觉好像是上星期才开的呢？还记得当时开博客的初衷，梳理一些学习笔记，记录一些个人想法，算是个笔记本吧然而下半年却没有坚持下来，惭愧。回望这一年，有收获也有很多挫折。但是却好像没有什么比较大的进步，试问下自己你这一年比年初的时候有什么变化了呢？有了什么大的进步？好像一下子并不能回答上来。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/12/31/2016-SUMMARY/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -567,116 +843,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/06/11/醉翁亭游记/" itemprop="url">
-                  醉翁亭游记
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-11T21:12:29+08:00" content="2016-06-11">
-              2016-06-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/随笔/" itemprop="url" rel="index">
-                    <span itemprop="name">随笔</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/06/11/醉翁亭游记/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/11/醉翁亭游记/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><del>~</del>~我是一个待填的坑<del>~</del></p>
-
-          
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -723,7 +889,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -740,7 +906,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
