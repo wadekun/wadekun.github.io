@@ -57,58 +57,22 @@
 
 
 
-<meta name="description" content="概念
-线程安全    
-
-当多个线程访问某个类时，不管按此用何种调度方式，并且在主调代码中不需要任何额外的同步或者协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。
-
-
-可见性    
-
-一个线程堆内存的修改可以被其他线程感知。
-
-
-竞态条件   
-
-在并发编程中，由于不恰当的执行时序而出现不正确的结果的情况称为为竞态条件（或者说对线程的执行顺序敏感，不同的执行顺序会出现不同的值，从而">
+<meta name="description" content="大致整理下Java并发编程相关的知识点。
+一本书可以越读越厚，也可以越读越薄。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java 并发编程知识整理">
 <meta property="og:url" content="http://wadekun.github.io/2017/02/17/Java-并发编程/index.html">
 <meta property="og:site_name" content="昆仑子的一亩三分地">
-<meta property="og:description" content="概念
-线程安全    
-
-当多个线程访问某个类时，不管按此用何种调度方式，并且在主调代码中不需要任何额外的同步或者协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。
-
-
-可见性    
-
-一个线程堆内存的修改可以被其他线程感知。
-
-
-竞态条件   
-
-在并发编程中，由于不恰当的执行时序而出现不正确的结果的情况称为为竞态条件（或者说对线程的执行顺序敏感，不同的执行顺序会出现不同的值，从而">
+<meta property="og:description" content="大致整理下Java并发编程相关的知识点。
+一本书可以越读越厚，也可以越读越薄。">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/a1d44fefgy1fdcxsi1w3jj20d40i4js9">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/a1d44fefgy1fdcz6ysx0fj21ae0tgjxi">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/a1d44fefly1fdczh36cauj20vu0cun0e">
-<meta property="og:updated_time" content="2017-03-06T04:29:38.000Z">
+<meta property="og:updated_time" content="2017-03-06T04:36:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 并发编程知识整理">
-<meta name="twitter:description" content="概念
-线程安全    
-
-当多个线程访问某个类时，不管按此用何种调度方式，并且在主调代码中不需要任何额外的同步或者协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。
-
-
-可见性    
-
-一个线程堆内存的修改可以被其他线程感知。
-
-
-竞态条件   
-
-在并发编程中，由于不恰当的执行时序而出现不正确的结果的情况称为为竞态条件（或者说对线程的执行顺序敏感，不同的执行顺序会出现不同的值，从而">
+<meta name="twitter:description" content="大致整理下Java并发编程相关的知识点。
+一本书可以越读越厚，也可以越读越薄。">
 
 
 
@@ -339,7 +303,10 @@
       
 
       
-        <h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><ol>
+        <p>大致整理下Java并发编程相关的知识点。</p>
+<p>一本书可以越读越厚，也可以越读越薄。</p>
+<a id="more"></a>
+<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><ol>
 <li><p>线程安全    </p>
 <blockquote>
 <p>当多个线程访问某个类时，不管按此用何种调度方式，并且在主调代码中不需要任何额外的同步或者协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。</p>
