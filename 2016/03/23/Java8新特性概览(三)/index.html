@@ -58,11 +58,13 @@
 
 
 <meta name="description" content="题外话最近在知乎上看到个话题，觉得挺有意思。不浮躁的社会是什么样的？(看完了，反省下自己，别浮躁)。尤其看到这个答案的时候，真是被触动到了，由衷的对这个老师感到敬佩。其实，我的梦想之一就是有了足够的钱去建所学校(认真脸)…">
+<meta name="keywords" content="Java,Java8">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java8新特性概览(三)">
 <meta property="og:url" content="http://wadekun.github.io/2016/03/23/Java8新特性概览(三)/index.html">
 <meta property="og:site_name" content="昆仑子的一亩三分地">
 <meta property="og:description" content="题外话最近在知乎上看到个话题，觉得挺有意思。不浮躁的社会是什么样的？(看完了，反省下自己，别浮躁)。尤其看到这个答案的时候，真是被触动到了，由衷的对这个老师感到敬佩。其实，我的梦想之一就是有了足够的钱去建所学校(认真脸)…">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2016-04-05T12:21:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java8新特性概览(三)">
@@ -297,7 +299,7 @@
       
 
       
-        <h3 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h3><p>最近在知乎上看到个话题，觉得挺有意思。<a href="https://www.zhihu.com/question/22633562" target="_blank" rel="external">不浮躁的社会是什么样的？</a>(看完了，反省下自己，别浮躁)。尤其看到<a href="https://www.zhihu.com/question/22633562/answer/90351145" target="_blank" rel="external">这个答案</a>的时候，真是被触动到了，由衷的对这个老师感到敬佩。其实，我的梦想之一就是有了足够的钱去建所学校(认真脸)…<br><a id="more"></a></p>
+        <h3 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h3><p>最近在知乎上看到个话题，觉得挺有意思。<a href="https://www.zhihu.com/question/22633562" target="_blank" rel="noopener">不浮躁的社会是什么样的？</a>(看完了，反省下自己，别浮躁)。尤其看到<a href="https://www.zhihu.com/question/22633562/answer/90351145" target="_blank" rel="noopener">这个答案</a>的时候，真是被触动到了，由衷的对这个老师感到敬佩。其实，我的梦想之一就是有了足够的钱去建所学校(认真脸)…<br><a id="more"></a></p>
 <h3 id="使用lambda编程"><a href="#使用lambda编程" class="headerlink" title="使用lambda编程"></a>使用lambda编程</h3><ul>
 <li>使用lambda表达式的主要原因是，将代码的执行延迟到一个合适的时间点。</li>
 <li>当执行一个lambda表达式时，请确认提供了所有必须的参数作为输入。</li>
@@ -545,7 +547,7 @@ for(...){
 }
 ...
 long total = adder.sum();
-</code></pre><p>关于LongAdder的实现，可以参看<a href="http://coolshell.cn/articles/11454.html" target="_blank" rel="external">从LongAdder看更高效的无锁实现</a>。</p>
+</code></pre><p>关于LongAdder的实现，可以参看<a href="http://coolshell.cn/articles/11454.html" target="_blank" rel="noopener">从LongAdder看更高效的无锁实现</a>。</p>
 <p>LongAccumulator 将这个思想带到了任意的累加操作中。在构造函数中，你需要提供操作类型及其中的中立元素。要与新值相加，需要调用accumulate方法。然后调用 get 方法获取当前值。以下代码与 LongAdder 的效果是一样的：</p>
 <pre><code>LongAccumulator adder = new LongAccumulator(Long::sum, 0);
 //在某些线程中
@@ -625,7 +627,7 @@ map.merge(word, 1L, Long::sum); // 还记得lambda中的构造器引用吗。
 <li>U searchKeys(long threshold, Function&lt;? super K, ? extends U&gt; f)</li>
 <li>U searchValues(long threshold, Function&lt;? super K, ? extends U&gt; f)</li>
 <li>U search(long threshold, BiFunction&lt;? super K, ? super V, ? extends U&gt; f)</li>
-<li>U searchEntries(long threshold, Function<map.entry<k, v="">, ? extends U&gt; f)</map.entry<k,></li>
+<li>U searchEntries(long threshold, Function&lt;Map.Entry<k, v="">, ? extends U&gt; f)</k,></li>
 </ul>
 <p>注：书上的searchKeys,searchValues,searchEntries三处的函数接口写成了BiFunction，在这里显然是不对的，因为只有一个入参，应该是Function接口，查阅Oracle API文档确实如此，在这里要纠正下。不知道是原作者写错了，还是翻译成中文的时候写错了，还是印刷错误。。想给原作者的站点去反馈的，可是感觉英文表达好费劲。。。不管怎样还是被自己的机智所感动啊。恩，看书，要有自己的想法，有所思。</p>
 <p>例如，假设我们希望找到第一个出现超过1000次的单词，我们需要搜索键和值：</p>
@@ -884,7 +886,7 @@ CompletableFuture&lt;List&lt;String&gt;&gt; links = contents.thenApply(Parser::g
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">26</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -956,7 +958,7 @@ CompletableFuture&lt;List&lt;String&gt;&gt; links = contents.thenApply(Parser::g
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

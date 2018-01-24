@@ -58,17 +58,20 @@
 
 
 <meta name="description" content="题记前几天有人问我Servlet有啥用，我们的WEB应用开发，啥时候有用到Servlet了。。我竟差点无言以对，定了定神，给他大致讲了下Servlet规范及tomcat的一次请求处理过程。然后那货点点头若有所悟的走了，恩，机智的我抓紧翻资料看有没有说错什么。Servlet是Java程序员最熟悉不过的东西了，可谓是JavaEE的核心。感觉还是有必要做些笔记，时常翻阅，印象也会深刻些。下次再有人问，直">
+<meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Servlet规范与Tomcat服务器">
 <meta property="og:url" content="http://wadekun.github.io/2016/03/02/Servlet规范与Tomcat服务器/index.html">
 <meta property="og:site_name" content="昆仑子的一亩三分地">
 <meta property="og:description" content="题记前几天有人问我Servlet有啥用，我们的WEB应用开发，啥时候有用到Servlet了。。我竟差点无言以对，定了定神，给他大致讲了下Servlet规范及tomcat的一次请求处理过程。然后那货点点头若有所悟的走了，恩，机智的我抓紧翻资料看有没有说错什么。Servlet是Java程序员最熟悉不过的东西了，可谓是JavaEE的核心。感觉还是有必要做些笔记，时常翻阅，印象也会深刻些。下次再有人问，直">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/a1d44fefgw1f1ix7wmgtlg20es09w3yk.gif">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/a1d44fefgw1f1ixhp1iljj20f80djwey.jpg">
 <meta property="og:updated_time" content="2016-03-02T15:51:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Servlet规范与Tomcat服务器">
 <meta name="twitter:description" content="题记前几天有人问我Servlet有啥用，我们的WEB应用开发，啥时候有用到Servlet了。。我竟差点无言以对，定了定神，给他大致讲了下Servlet规范及tomcat的一次请求处理过程。然后那货点点头若有所悟的走了，恩，机智的我抓紧翻资料看有没有说错什么。Servlet是Java程序员最熟悉不过的东西了，可谓是JavaEE的核心。感觉还是有必要做些笔记，时常翻阅，印象也会深刻些。下次再有人问，直">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/a1d44fefgw1f1ix7wmgtlg20es09w3yk.gif">
 
 
 
@@ -302,7 +305,7 @@
         <h5 id="题记"><a href="#题记" class="headerlink" title="题记"></a>题记</h5><p>前几天有人问我Servlet有啥用，我们的WEB应用开发，啥时候有用到Servlet了。。我竟差点无言以对，定了定神，给他大致讲了下Servlet规范及tomcat的一次请求处理过程。然后那货点点头若有所悟的走了，恩，机智的我抓紧翻资料看有没有说错什么。<br>Servlet是Java程序员最熟悉不过的东西了，可谓是JavaEE的核心。感觉还是有必要做些笔记，时常翻阅，印象也会深刻些。下次再有人问，直接抛链接，岂（显）不（得）美（牛）哉（比）。</p>
 <a id="more"></a>
 <h5 id="Servlet规范概述"><a href="#Servlet规范概述" class="headerlink" title="Servlet规范概述"></a>Servlet规范概述</h5><blockquote>
-<p><a href="https://jcp.org/en/jsr/detail?id=340" target="_blank" rel="external">https://jcp.org/en/jsr/detail?id=340</a></p>
+<p><a href="https://jcp.org/en/jsr/detail?id=340" target="_blank" rel="noopener">https://jcp.org/en/jsr/detail?id=340</a></p>
 </blockquote>
 <ol>
 <li><p>Servlet是什么<br>Servlet 是基于 Java 技术的 web 组件,容器托管的,用于生成动态内容。像其他基于 Java 的组件技术一样, Servlet 也是基于平台无关的 Java 类格式,被编译为平台无关的字节码,可以被基于 Java 技术的 web server 动态加载并运行。容器,有时候也叫做 servlet 引擎,是 web server 为支持 servlet 功能扩展的部分。客户端 通过 Servlet 容器实现的请求/应答模型与 Servlet 交互。  </p>
@@ -347,7 +350,7 @@
 </blockquote>
 <h6 id="ServletContext接口"><a href="#ServletContext接口" class="headerlink" title="ServletContext接口"></a>ServletContext接口</h6><blockquote>
 <p>ServletContext(Servlet 上下文)接口定义了 servlet 运行在的 Web 应用的视图。容器供应商负责提供 Servlet 容器的 ServletContext 接口的实现。Servlet 可以使用 ServletContext 对象记录事件,获取 URL 引用的资源, 存取当前上下文的其他 Servlet 可以访问的属性。</p>
-<p>ServletContext 是 Web 服务器中已知路径的根。例如,Servlet 上下文可以从 <a href="http://www.mycorp.com/catalog" target="_blank" rel="external">http://www.mycorp.com/catalog</a> 找出,/catalog 请求路径称为上下文路径,所有以它开头的请求都会被路由到与 ServletContext 相关联的 Web 应用。</p>
+<p>ServletContext 是 Web 服务器中已知路径的根。例如,Servlet 上下文可以从 <a href="http://www.mycorp.com/catalog" target="_blank" rel="noopener">http://www.mycorp.com/catalog</a> 找出,/catalog 请求路径称为上下文路径,所有以它开头的请求都会被路由到与 ServletContext 相关联的 Web 应用。</p>
 </blockquote>
 <h6 id="Filter-过滤器接口"><a href="#Filter-过滤器接口" class="headerlink" title="Filter 过滤器接口"></a>Filter 过滤器接口</h6><blockquote>
 <p>过滤器(Filter)是 Java 组件,允许运行过程中改变进入资源的请求和资源返回的响应中的有效负载和 header 信息。</p>
@@ -427,7 +430,7 @@ public abstract class LifecycleBase implements Lifecycle {
   ...
 }
 </code></pre><p>然后各组件继承该抽象生命周期基类，实现startInternal方法，完成自己的start业务。同时需要时直接调用子组件的start方法即可。get新技能。</p>
-<h5 id="总结下"><a href="#总结下" class="headerlink" title="总结下"></a>总结下</h5><p>说的很乱，太晚了，困了。。写了这么多，有的直接抄的官方文档，有的是摘抄别人的额博客(本着学习的目的，没有用于商业用途，我想大牛们不会怪我吧😄)，有的是自己之前记录的。简单梳理下，遇到具体问题，再行记录。<br>附上一篇讲的很详细的文章：<a href="https://www.ibm.com/developerworks/cn/java/j-lo-tomcat1/" target="_blank" rel="external">Tomcat 系统架构与设计模式，第 1 部分: 工作原理</a></p>
+<h5 id="总结下"><a href="#总结下" class="headerlink" title="总结下"></a>总结下</h5><p>说的很乱，太晚了，困了。。写了这么多，有的直接抄的官方文档，有的是摘抄别人的额博客(本着学习的目的，没有用于商业用途，我想大牛们不会怪我吧😄)，有的是自己之前记录的。简单梳理下，遇到具体问题，再行记录。<br>附上一篇讲的很详细的文章：<a href="https://www.ibm.com/developerworks/cn/java/j-lo-tomcat1/" target="_blank" rel="noopener">Tomcat 系统架构与设计模式，第 1 部分: 工作原理</a></p>
 
       
     </div>
@@ -527,7 +530,7 @@ public abstract class LifecycleBase implements Lifecycle {
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">26</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -599,7 +602,7 @@ public abstract class LifecycleBase implements Lifecycle {
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
