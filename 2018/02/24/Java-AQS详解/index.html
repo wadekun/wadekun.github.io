@@ -57,21 +57,21 @@
 
 
 
-<meta name="description" content="AbstractQueuedSynchronizer(AQS) 概述AbstractQueuedSynchronizer抽象队列同步器，定义了一套多线程访问共享资源的同步器框架，Java中许多同步工具类都依赖于它，如常用的ReentrantLock/Semaphore/CountDownLatch。 框架图片来自 http://www.cnblogs.com/waterystone/p/49207">
+<meta name="description" content="AbstractQueuedSynchronizer(AQS) 概述AbstractQueuedSynchronizer抽象队列同步器，定义了一套多线程访问共享资源的同步器框架，Java中许多同步工具类都依赖于它，如常用的ReentrantLock/Semaphore/CountDownLatch。">
 <meta name="keywords" content="Java - 并发编程 - 多线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java AQS详解">
 <meta property="og:url" content="http://wadekun.github.io/2018/02/24/Java-AQS详解/index.html">
 <meta property="og:site_name" content="昆仑子的一亩三分地">
-<meta property="og:description" content="AbstractQueuedSynchronizer(AQS) 概述AbstractQueuedSynchronizer抽象队列同步器，定义了一套多线程访问共享资源的同步器框架，Java中许多同步工具类都依赖于它，如常用的ReentrantLock/Semaphore/CountDownLatch。 框架图片来自 http://www.cnblogs.com/waterystone/p/49207">
+<meta property="og:description" content="AbstractQueuedSynchronizer(AQS) 概述AbstractQueuedSynchronizer抽象队列同步器，定义了一套多线程访问共享资源的同步器框架，Java中许多同步工具类都依赖于它，如常用的ReentrantLock/Semaphore/CountDownLatch。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://wadekun.github.io/iamges/aqs_framework.png">
+<meta property="og:image" content="http://wadekun.github.io/images/aqs_framework.png">
 <meta property="og:image" content="http://wadekun.github.io/images/aqs-acquire-flow.png">
-<meta property="og:updated_time" content="2018-02-24T07:11:49.000Z">
+<meta property="og:updated_time" content="2018-02-24T07:13:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java AQS详解">
-<meta name="twitter:description" content="AbstractQueuedSynchronizer(AQS) 概述AbstractQueuedSynchronizer抽象队列同步器，定义了一套多线程访问共享资源的同步器框架，Java中许多同步工具类都依赖于它，如常用的ReentrantLock/Semaphore/CountDownLatch。 框架图片来自 http://www.cnblogs.com/waterystone/p/49207">
-<meta name="twitter:image" content="http://wadekun.github.io/iamges/aqs_framework.png">
+<meta name="twitter:description" content="AbstractQueuedSynchronizer(AQS) 概述AbstractQueuedSynchronizer抽象队列同步器，定义了一套多线程访问共享资源的同步器框架，Java中许多同步工具类都依赖于它，如常用的ReentrantLock/Semaphore/CountDownLatch。">
+<meta name="twitter:image" content="http://wadekun.github.io/images/aqs_framework.png">
 
 
 
@@ -303,8 +303,9 @@
 
       
         <h1 id="AbstractQueuedSynchronizer-AQS-概述"><a href="#AbstractQueuedSynchronizer-AQS-概述" class="headerlink" title="AbstractQueuedSynchronizer(AQS) 概述"></a>AbstractQueuedSynchronizer(AQS) 概述</h1><p><code>AbstractQueuedSynchronizer</code>抽象队列同步器，定义了一套多线程访问共享资源的同步器框架，Java中许多同步工具类都依赖于它，如常用的<code>ReentrantLock/Semaphore/CountDownLatch</code>。</p>
+<a id="more"></a>
 <h1 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h1><p>图片来自 <a href="http://www.cnblogs.com/waterystone/p/4920797.html" target="_blank" rel="noopener">http://www.cnblogs.com/waterystone/p/4920797.html</a></p>
-<p><img src="/iamges/aqs_framework.png" alt=""></p>
+<p><img src="/images/aqs_framework.png" alt=""></p>
 <p><code>AQS</code>维护了一个<code>volatile int state</code>变量（代表共享资源）。和一个<code>FIFO</code>队列(CLH队列)，多线程争用资源被阻塞时会进入此队列。</p>
 <p><code>state</code>的三个操作： </p>
 <ul>
