@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Java - 并发编程 - 多线程," />
 
 
 
@@ -57,16 +57,21 @@
 
 
 
-<meta name="description" content="芝兰生于深谷，不以无人而不芳；君子修身养德，不因穷困而改志">
-<meta property="og:type" content="website">
-<meta property="og:title" content="昆仑子的一亩三分地">
-<meta property="og:url" content="http://wadekun.github.io/index.html">
+<meta name="description" content="AbstractQueuedSynchronizer(AQS) 概述AbstractQueuedSynchronizer抽象队列同步器，定义了一套多线程访问共享资源的同步器框架，Java中许多同步工具类都依赖于它，如常用的ReentrantLock/Semaphore/CountDownLatch。 框架图片来自 http://www.cnblogs.com/waterystone/p/49207">
+<meta name="keywords" content="Java - 并发编程 - 多线程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java AQS详解">
+<meta property="og:url" content="http://wadekun.github.io/2018/02/24/Java-AQS详解/index.html">
 <meta property="og:site_name" content="昆仑子的一亩三分地">
-<meta property="og:description" content="芝兰生于深谷，不以无人而不芳；君子修身养德，不因穷困而改志">
+<meta property="og:description" content="AbstractQueuedSynchronizer(AQS) 概述AbstractQueuedSynchronizer抽象队列同步器，定义了一套多线程访问共享资源的同步器框架，Java中许多同步工具类都依赖于它，如常用的ReentrantLock/Semaphore/CountDownLatch。 框架图片来自 http://www.cnblogs.com/waterystone/p/49207">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://wadekun.github.io/2018/02/24/Java-AQS详解/imgs/aqs_framework.png">
+<meta property="og:image" content="http://wadekun.github.io/2018/02/24/Java-AQS详解/imgs/aqs-acquire-flow.png">
+<meta property="og:updated_time" content="2018-02-24T07:06:01.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="昆仑子的一亩三分地">
-<meta name="twitter:description" content="芝兰生于深谷，不以无人而不芳；君子修身养德，不因穷困而改志">
+<meta name="twitter:title" content="Java AQS详解">
+<meta name="twitter:description" content="AbstractQueuedSynchronizer(AQS) 概述AbstractQueuedSynchronizer抽象队列同步器，定义了一套多线程访问共享资源的同步器框架，Java中许多同步工具类都依赖于它，如常用的ReentrantLock/Semaphore/CountDownLatch。 框架图片来自 http://www.cnblogs.com/waterystone/p/49207">
+<meta name="twitter:image" content="http://wadekun.github.io/2018/02/24/Java-AQS详解/imgs/aqs_framework.png">
 
 
 
@@ -84,7 +89,7 @@
   };
 </script>
 
-  <title> 昆仑子的一亩三分地 </title>
+  <title> Java AQS详解 | 昆仑子的一亩三分地 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -103,9 +108,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -213,24 +216,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
 
+  <div id="posts" class="posts-expand">
     
-
-    
-    
-      
-      
-        
-        
-        
-      
-
-      
-    
-
-    
-      
 
   
   
@@ -250,10 +238,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2018/02/24/Java-AQS详解/" itemprop="url">
-                  Java AQS详解
-                </a>
+                Java AQS详解
               
             
           </h1>
@@ -317,9 +302,7 @@
       
 
       
-        
-          
-            <h1 id="AbstractQueuedSynchronizer-AQS-概述"><a href="#AbstractQueuedSynchronizer-AQS-概述" class="headerlink" title="AbstractQueuedSynchronizer(AQS) 概述"></a>AbstractQueuedSynchronizer(AQS) 概述</h1><p><code>AbstractQueuedSynchronizer</code>抽象队列同步器，定义了一套多线程访问共享资源的同步器框架，Java中许多同步工具类都依赖于它，如常用的<code>ReentrantLock/Semaphore/CountDownLatch</code>。</p>
+        <h1 id="AbstractQueuedSynchronizer-AQS-概述"><a href="#AbstractQueuedSynchronizer-AQS-概述" class="headerlink" title="AbstractQueuedSynchronizer(AQS) 概述"></a>AbstractQueuedSynchronizer(AQS) 概述</h1><p><code>AbstractQueuedSynchronizer</code>抽象队列同步器，定义了一套多线程访问共享资源的同步器框架，Java中许多同步工具类都依赖于它，如常用的<code>ReentrantLock/Semaphore/CountDownLatch</code>。</p>
 <h1 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h1><p>图片来自 <a href="http://www.cnblogs.com/waterystone/p/4920797.html" target="_blank" rel="noopener">http://www.cnblogs.com/waterystone/p/4920797.html</a></p>
 <p><img src="imgs/aqs_framework.png" alt=""></p>
 <p><code>AQS</code>维护了一个<code>volatile int state</code>变量（代表共享资源）。和一个<code>FIFO</code>队列(CLH队列)，多线程争用资源被阻塞时会进入此队列。</p>
@@ -411,487 +394,45 @@
 </ul>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://www.cnblogs.com/waterystone/p/4920797.html" target="_blank" rel="noopener">http://www.cnblogs.com/waterystone/p/4920797.html</a></p>
 
-          
-        
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/05/21/老兵不死，只会慢慢凋零/" itemprop="url">
-                  老兵不死，只会慢慢凋零
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-05-21T11:47:01+08:00" content="2017-05-21">
-              2017-05-21
-            </time>
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/随笔/" itemprop="url" rel="index">
-                    <span itemprop="name">随笔</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/05/21/老兵不死，只会慢慢凋零/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/21/老兵不死，只会慢慢凋零/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
+            <a href="/tags/Java-并发编程-多线程/" rel="tag">#Java - 并发编程 - 多线程</a>
           
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <p>…嵌的iframe好像在github上显示不了啊，直接地址复制看源视频吧，今天看了马刺和勇士的G3，CCTV5的视频做的很不错，有感而发。</p>
-<p>正版的 Battle Symphony 版权保护，生成不了链接…囧</p>
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="100" height="5" src="//music.163.com/outchain/player?type=2&id=466299780&auto=1&height=66"></iframe>
-
-<p><strong>老兵不死，只会慢慢凋零…</strong></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2017/05/21/老兵不死，只会慢慢凋零/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/21/老兵不死，只会慢慢凋零/" rel="next" title="老兵不死，只会慢慢凋零">
+                <i class="fa fa-chevron-left"></i> 老兵不死，只会慢慢凋零
+              </a>
+            
           </div>
-        
-      
-    </div>
 
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+          <div class="post-nav-prev post-nav-item">
             
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/17/Java-并发编程/" itemprop="url">
-                  Java 并发编程知识整理
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-17T21:13:58+08:00" content="2017-02-17">
-              2017-02-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/技术/" itemprop="url" rel="index">
-                    <span itemprop="name">技术</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/02/17/Java-并发编程/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/17/Java-并发编程/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <p>大致整理下Java并发编程相关的知识点。</p>
-<p>一本书可以越读越厚，也可以越读越薄。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2017/02/17/Java-并发编程/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-      
 
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/03/深入理解JVM-一/" itemprop="url">
-                  深入理解JVM(一)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-03T15:43:10+08:00" content="2017-02-03">
-              2017-02-03
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/技术/" itemprop="url" rel="index">
-                    <span itemprop="name">技术</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/02/03/深入理解JVM-一/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/03/深入理解JVM-一/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="写在前面的话"><a href="#写在前面的话" class="headerlink" title="写在前面的话"></a>写在前面的话</h1><p>Java虚拟机提供了Java class文件的运行时环境，java的平台无关性、语言无关都是依赖于不同平台的JVM实现屏蔽了操作系统的底层差异、以及制定的class文件标准。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2017/02/03/深入理解JVM-一/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
+    <div class="post-spread">
       
     </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/12/31/2016-SUMMARY/" itemprop="url">
-                  2016 SUMMARY
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-12-31T23:32:21+08:00" content="2016-12-31">
-              2016-12-31
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/随笔/" itemprop="url" rel="index">
-                    <span itemprop="name">随笔</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/12/31/2016-SUMMARY/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/31/2016-SUMMARY/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="年终小感想"><a href="#年终小感想" class="headerlink" title="年终小感想"></a>年终小感想</h1><p>在我开始写这篇文章的时候，2016年还剩下不到15分钟了。</p>
-<p>时间过的可真是快，github博客开了快一年了。怎么感觉好像是上星期才开的呢？还记得当时开博客的初衷，梳理一些学习笔记，记录一些个人想法，算是个笔记本吧然而下半年却没有坚持下来，惭愧。回望这一年，有收获也有很多挫折。但是却好像没有什么比较大的进步，试问下自己你这一年比年初的时候有什么变化了呢？有了什么大的进步？好像一下子并不能回答上来。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/12/31/2016-SUMMARY/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-
-  </section>
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
-
+  </div>
 
 
           </div>
@@ -899,6 +440,14 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2018/02/24/Java-AQS详解/"
+           data-title="Java AQS详解" data-url="http://wadekun.github.io/2018/02/24/Java-AQS详解/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -918,8 +467,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/liuchuanfengtouxiang.jpg"
@@ -970,6 +528,23 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#AbstractQueuedSynchronizer-AQS-概述"><span class="nav-number">1.</span> <span class="nav-text">AbstractQueuedSynchronizer(AQS) 概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#框架"><span class="nav-number">2.</span> <span class="nav-text">框架</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源码解析"><span class="nav-number">3.</span> <span class="nav-text">源码解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#acquire-int-arg"><span class="nav-number">3.1.</span> <span class="nav-text">acquire(int arg)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tryAcquire-int"><span class="nav-number">3.1.1.</span> <span class="nav-text">tryAcquire(int)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#addWaiter-Node"><span class="nav-number">3.1.2.</span> <span class="nav-text">addWaiter(Node)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#enq-Node"><span class="nav-number">3.1.2.1.</span> <span class="nav-text">enq(Node)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#acquireQueued"><span class="nav-number">3.1.3.</span> <span class="nav-text">acquireQueued()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#shouldParkAfterFailedAcquire-Node-Node"><span class="nav-number">3.1.3.1.</span> <span class="nav-text">shouldParkAfterFailedAcquire(Node, Node)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#parkAndCheckInterrupt"><span class="nav-number">3.1.3.2.</span> <span class="nav-text">parkAndCheckInterrupt()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#acquire-int-arg-小结"><span class="nav-number">3.2.</span> <span class="nav-text">acquire(int arg) 小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#release-int-arg"><span class="nav-number">3.3.</span> <span class="nav-text">release(int arg)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tryRelease-int"><span class="nav-number">3.3.1.</span> <span class="nav-text">tryRelease(int)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unparkSuccessor-Node"><span class="nav-number">3.3.2.</span> <span class="nav-text">unparkSuccessor(Node)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unparkSuccessor的疑问"><span class="nav-number">3.3.3.</span> <span class="nav-text">unparkSuccessor的疑问</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#acquireShared-int-arg"><span class="nav-number">3.4.</span> <span class="nav-text">acquireShared(int arg)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tryAcquireShared-int"><span class="nav-number">3.4.1.</span> <span class="nav-text">tryAcquireShared(int)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#doAcquireShared-int"><span class="nav-number">3.4.2.</span> <span class="nav-text">doAcquireShared(int)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#setHeadAndPropagate-Node-int"><span class="nav-number">3.4.3.</span> <span class="nav-text">setHeadAndPropagate(Node, int)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#releaseShared-int-arg"><span class="nav-number">3.5.</span> <span class="nav-text">releaseShared(int arg)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#doReleaseShared"><span class="nav-number">3.5.1.</span> <span class="nav-text">doReleaseShared</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简单应用"><span class="nav-number">4.</span> <span class="nav-text">简单应用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
       
 
     </div>
@@ -1044,6 +619,167 @@
   
 
   
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar.display === 'post' || CONFIG.sidebar.display === 'always') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
 
   
 
