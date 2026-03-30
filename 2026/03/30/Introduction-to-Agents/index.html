@@ -1,0 +1,151 @@
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="芝兰生于深谷，不以无人而不芳；君子修身养德，不因穷困而改志"><title>Introduction to Agents | 昆仑子的一亩三分地</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Introduction to Agents</h1><a id="logo" href="/.">昆仑子的一亩三分地</a><p class="description">芝兰生于深谷，不以无人而不芳；君子修身养德，不因穷困而改志。</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Introduction to Agents</h1><div class="post-meta">2026-03-30<span> | </span><span class="category"><a href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></span></div><div class="post-content"><p>本系列文章为Kaggle-Google教程<a target="_blank" rel="noopener" href="https://www.kaggle.com/learn-guide/5-day-agents">5-Day AI Agents Intensive Course with Google</a>学习笔记。</p>
+<span id="more"></span>
+
+<h1 id="1-Introduction-to-Agents"><a href="#1-Introduction-to-Agents" class="headerlink" title="1. Introduction to Agents"></a>1. Introduction to Agents</h1><h2 id="📖-1-核心背景：范式转移-The-Paradigm-Shift"><a href="#📖-1-核心背景：范式转移-The-Paradigm-Shift" class="headerlink" title="📖 1. 核心背景：范式转移 (The Paradigm Shift)"></a>📖 1. 核心背景：范式转移 (The Paradigm Shift)</h2><h3 id="现状-vs-未来"><a href="#现状-vs-未来" class="headerlink" title="现状 vs 未来"></a>现状 vs 未来</h3><ul>
+<li>**传统AI (Predictive&#x2F;Generative AI)**：被动的、离散的任务执行者。<ul>
+<li><em>典型场景</em>：回答问题、翻译文本、生成图片。</li>
+<li><em>局限</em>：每一步都需要人类持续的Prompt引导，无法独立完成长链路任务。</li>
+</ul>
+</li>
+<li>**AI智能体 (AI Agents)**：主动的、目标导向的系统。<ul>
+<li><em>定义</em>：不仅仅是模型，而是<strong>模型+工具+编排</strong>的完整应用。它们能够制定计划、采取行动并根据反馈迭代，直到达成目标。</li>
+<li><em>价值</em>：从“辅助内容生成”转向“自主解决问题”。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>💡 <strong>一句话总结</strong>：如果说LLM是“大脑”，那么Agent就是给大脑装上了“手脚”和“神经系统”，让它能真正干活。</p>
+</blockquote>
+<hr>
+<h2 id="🏗️-2-智能体架构：四大核心组件-The-Anatomy-of-an-Agent"><a href="#🏗️-2-智能体架构：四大核心组件-The-Anatomy-of-an-Agent" class="headerlink" title="🏗️ 2. 智能体架构：四大核心组件 (The Anatomy of an Agent)"></a>🏗️ 2. 智能体架构：四大核心组件 (The Anatomy of an Agent)</h2><p>构建一个Agent不仅仅是调用API，它需要四个基本组件协同工作：</p>
+<h3 id="🧠-1-大脑-The-Brain-模型层"><a href="#🧠-1-大脑-The-Brain-模型层" class="headerlink" title="🧠 1. 大脑 (The Brain) - 模型层"></a>🧠 1. 大脑 (The Brain) - 模型层</h3><ul>
+<li><strong>核心</strong>：基础语言模型（LLM）。</li>
+<li><strong>职责</strong>：负责推理（Reasoning）、规划（Planning）和决策。</li>
+<li><strong>关键能力</strong>：理解复杂指令，从上下文中提取关键信息。</li>
+</ul>
+<h3 id="🛠️-2-手脚-The-Hands-工具层"><a href="#🛠️-2-手脚-The-Hands-工具层" class="headerlink" title="🛠️ 2. 手脚 (The Hands) - 工具层"></a>🛠️ 2. 手脚 (The Hands) - 工具层</h3><ul>
+<li><strong>定义</strong>：连接内部推理与外部世界的桥梁。</li>
+<li><strong>组成</strong>：<ul>
+<li><strong>API扩展</strong>：调用外部服务（如发送邮件、查询天气）。</li>
+<li><strong>代码执行</strong>：运行Python脚本进行计算或数据处理。</li>
+<li><strong>数据检索</strong>：访问向量数据库或RAG系统获取实时信息。</li>
+</ul>
+</li>
+</ul>
+<h3 id="⚡-3-神经系统-The-Nervous-System-编排层"><a href="#⚡-3-神经系统-The-Nervous-System-编排层" class="headerlink" title="⚡ 3. 神经系统 (The Nervous System) - 编排层"></a>⚡ 3. 神经系统 (The Nervous System) - 编排层</h3><ul>
+<li><strong>职责</strong>：管理Agent的“认知循环”。</li>
+<li><strong>功能</strong>：<ul>
+<li>**记忆管理 (Memory)**：短期记忆（当前对话上下文）与长期记忆（历史经验）。</li>
+<li><strong>状态维护</strong>：记录当前任务进行到哪一步。</li>
+<li><strong>推理策略</strong>：如ReAct（Reasoning + Acting）、CoT（Chain of Thought）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="🛡️-4-躯体-The-Body-部署与运行时"><a href="#🛡️-4-躯体-The-Body-部署与运行时" class="headerlink" title="🛡️ 4. 躯体 (The Body) - 部署与运行时"></a>🛡️ 4. 躯体 (The Body) - 部署与运行时</h3><ul>
+<li><strong>职责</strong>：将原型转化为生产级服务。</li>
+<li><strong>包含</strong>：宿主环境、安全沙箱、日志监控、鉴权机制。</li>
+</ul>
+<hr>
+<h2 id="🔄-3-认知循环：Agent是如何思考的？-The-Cognitive-Loop"><a href="#🔄-3-认知循环：Agent是如何思考的？-The-Cognitive-Loop" class="headerlink" title="🔄 3. 认知循环：Agent是如何思考的？ (The Cognitive Loop)"></a>🔄 3. 认知循环：Agent是如何思考的？ (The Cognitive Loop)</h2><p>一个Agent在接收到任务后，会经历一个标准的<strong>5步循环</strong>：</p>
+<ol>
+<li><strong>接取任务 (Get the Mission)</strong><ul>
+<li>用户或触发器输入高层目标（例如：“帮我查一下订单#12345到哪了”）。</li>
+</ul>
+</li>
+<li><strong>扫描场景 (Scan the Scene)</strong><ul>
+<li>感知环境：用户是谁？现在几点？有哪些工具可用？记忆里有什么？</li>
+</ul>
+</li>
+<li><strong>深思熟虑 (Think It Through)</strong><ul>
+<li><strong>分解与规划</strong>：LLM制定计划。</li>
+<li><em>示例</em>：“我需要先去数据库查订单详情，拿到快递单号，再去查物流API。”</li>
+</ul>
+</li>
+<li><strong>采取行动 (Take Action)</strong><ul>
+<li>调用工具：执行 <code>find_order(&quot;12345&quot;)</code>。</li>
+</ul>
+</li>
+<li><strong>观察与迭代 (Observe and Iterate)</strong><ul>
+<li>获取反馈：工具返回“运单号是ZYX987”。</li>
+<li><strong>闭环</strong>：回到第3步，利用新信息继续规划下一动作（调用 <code>check_shipping(&quot;ZYX987&quot;)</code>），直到任务完成。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="📈-4-能力分级：从聊天机器人到多智能体协作-Levels-of-Agents"><a href="#📈-4-能力分级：从聊天机器人到多智能体协作-Levels-of-Agents" class="headerlink" title="📈 4. 能力分级：从聊天机器人到多智能体协作 (Levels of Agents)"></a>📈 4. 能力分级：从聊天机器人到多智能体协作 (Levels of Agents)</h2><p>Google将Agent的能力成熟度分为四个等级，这为我们的技术演进提供了清晰的路线图：</p>
+<h3 id="Level-0-核心推理系统-The-Core-Reasoning-System"><a href="#Level-0-核心推理系统-The-Core-Reasoning-System" class="headerlink" title="Level 0: 核心推理系统 (The Core Reasoning System)"></a>Level 0: 核心推理系统 (The Core Reasoning System)</h3><ul>
+<li><strong>描述</strong>：裸奔的LLM。</li>
+<li><strong>能力</strong>：仅依赖预训练知识。</li>
+<li><strong>缺陷</strong>：有幻觉，无法获取实时信息（问它“昨晚比赛谁赢了”会失败）。</li>
+</ul>
+<h3 id="Level-1-联网的问题解决者-The-Connected-Problem-Solver"><a href="#Level-1-联网的问题解决者-The-Connected-Problem-Solver" class="headerlink" title="Level 1: 联网的问题解决者 (The Connected Problem-Solver)"></a>Level 1: 联网的问题解决者 (The Connected Problem-Solver)</h3><ul>
+<li><strong>描述</strong>：LLM + 工具。</li>
+<li><strong>能力</strong>：能识别意图并调用外部API获取答案。</li>
+<li><strong>示例</strong>：RAG应用，或能联网搜索的Chatbot。</li>
+</ul>
+<h3 id="Level-2-战略性规划者-The-Strategic-Problem-Solver"><a href="#Level-2-战略性规划者-The-Strategic-Problem-Solver" class="headerlink" title="Level 2: 战略性规划者 (The Strategic Problem-Solver)"></a>Level 2: 战略性规划者 (The Strategic Problem-Solver)</h3><ul>
+<li><strong>描述</strong>：具备复杂规划和上下文管理能力。</li>
+<li><strong>能力</strong>：能处理模糊的多步骤任务。</li>
+<li><strong>示例</strong>：“帮我规划一次东京旅行”，它会自动拆解为查机票、订酒店、排行程、算预算等多个步骤，并自行串联。</li>
+</ul>
+<h3 id="Level-3-协作式多智能体系统-Collaborative-Multi-Agent-System"><a href="#Level-3-协作式多智能体系统-Collaborative-Multi-Agent-System" class="headerlink" title="Level 3: 协作式多智能体系统 (Collaborative Multi-Agent System)"></a>Level 3: 协作式多智能体系统 (Collaborative Multi-Agent System)</h3><ul>
+<li><strong>描述</strong>：专家团队协作。</li>
+<li><strong>架构</strong>：一个“项目经理Agent”负责拆解任务，分发给“市场调研Agent”、“代码编写Agent”、“测试Agent”等。</li>
+<li><strong>价值</strong>：实现复杂业务流程的端到端自动化。</li>
+</ul>
+<hr>
+<h2 id="🏗️-5-工程化"><a href="#🏗️-5-工程化" class="headerlink" title="🏗️ 5. 工程化"></a>🏗️ 5. 工程化</h2><h3 id="5-1-选型策略（The-Brain）"><a href="#5-1-选型策略（The-Brain）" class="headerlink" title="5.1 选型策略（The Brain）"></a>5.1 选型策略（The Brain）</h3><ul>
+<li>选型原则：不迷信跑分，关注 Agent 基础能力（复杂推理、工具使用稳定性）。</li>
+<li>混合模型路由：使用前沿大模型（如 Gemini 3.0 Pro）处理复杂规划，用轻量模型（如 Flash）处理简单分类，平衡成本与延迟 。</li>
+</ul>
+<h3 id="5-2-工具设计"><a href="#5-2-工具设计" class="headerlink" title="5.2 工具设计"></a>5.2 工具设计</h3><ul>
+<li>RAG (检索增强生成)：给予 Agent 访问知识库的“借书证”，减少幻觉。</li>
+<li>Actions (执行)：通过 API 改变世界（发邮件、写数据库）。</li>
+<li>Function Calling：利用 OpenAPI 规范或 MCP (Model Context Protocol) 协议，让模型准确生成函数调用参数 。</li>
+</ul>
+<h3 id="5-3-Agent-Ops：管理不确定性"><a href="#5-3-Agent-Ops：管理不确定性" class="headerlink" title="5.3 Agent Ops：管理不确定性"></a>5.3 Agent Ops：管理不确定性</h3><p>由于 Agent 具有概率性，传统的单元测试（assert output &#x3D;&#x3D; expected）不再适用。需要引入 Agent Ops：</p>
+<ul>
+<li>以质量为指标：使用 LLM-as-a-Judge（大模型裁判）对 Agent 的输出进行评分（准确性、合规性、语气）。</li>
+<li>基于指标的开发 (Metrics-Driven Development)：建立“金标准”数据集，每次迭代都需跑通评估集。</li>
+<li>可观测性：使用 OpenTelemetry Traces 记录完整的思考路径（Prompt -&gt; Reasoning -&gt; Tool Call -&gt; Result），用于 Debug “为什么它会这么想”。</li>
+</ul>
+<h3 id="5-4-安全架构-Security"><a href="#5-4-安全架构-Security" class="headerlink" title="5.4 安全架构 (Security)"></a>5.4 安全架构 (Security)</h3><ul>
+<li>信任权衡：赋予自主权意味着风险。需采用深度防御 (Defense-in-Depth)。<ul>
+<li>Layer 1 确定性护栏：硬编码规则（如“交易额 &gt; $100 需人工审批”）。</li>
+<li>Layer 2 模型护栏：使用专门的小模型审查 Agent 的计划是否合规。</li>
+</ul>
+</li>
+<li>身份管理：Agent 是新的身份类别（Principal）。需要为 Agent 分配独立的、可验证的数字身份（如 SPIFFE），并实施最小权限原则 。</li>
+</ul>
+<hr>
+<h2 id="⚠️-6-企业级落地的挑战：智能体蔓延-Agent-Sprawl"><a href="#⚠️-6-企业级落地的挑战：智能体蔓延-Agent-Sprawl" class="headerlink" title="⚠️ 6. 企业级落地的挑战：智能体蔓延 (Agent Sprawl)"></a>⚠️ 6. 企业级落地的挑战：智能体蔓延 (Agent Sprawl)</h2><p>在PPT的后半部分，重点提到了企业落地时的风险。</p>
+<h3 id="什么是“智能体蔓延”？"><a href="#什么是“智能体蔓延”？" class="headerlink" title="什么是“智能体蔓延”？"></a>什么是“智能体蔓延”？</h3><p>当企业内部各个团队都在独立开发Agent，且缺乏统一治理时，会出现：</p>
+<ul>
+<li><strong>交互网络混乱</strong>：成百上千个Agent互相调用，难以调试。</li>
+<li><strong>数据安全失控</strong>：Agent可能过度访问敏感数据。</li>
+<li><strong>治理缺失</strong>：不知道哪个Agent在运行，消耗了多少Token。</li>
+</ul>
+<h3 id="解决方案框架"><a href="#解决方案框架" class="headerlink" title="解决方案框架"></a>解决方案框架</h3><ul>
+<li><strong>集中式治理</strong>：建立统一的Agent注册与管理平台。</li>
+<li><strong>标准化接口</strong>：定义Agent之间通信的标准协议（Interoperability）。</li>
+<li><strong>安全护栏</strong>：在编排层强制加入权限校验和人类介入（Human-in-the-loop）机制。</li>
+</ul>
+<hr>
+<h2 id="📝-7-前沿趋势与未来"><a href="#📝-7-前沿趋势与未来" class="headerlink" title="📝 7. 前沿趋势与未来"></a>📝 7. 前沿趋势与未来</h2><h3 id="7-1-互操作性-Interoperability"><a href="#7-1-互操作性-Interoperability" class="headerlink" title="7.1 互操作性 (Interoperability)"></a>7.1 互操作性 (Interoperability)</h3><ul>
+<li>Agent 2 Agent (A2A)：不同组织的 Agent 之间通过标准化协议进行发现、握手和协作，形成 Agent 经济网络 。</li>
+<li>Agent 支付：通过 Agent Payments Protocol (AP2) 和 x402 协议，赋予 Agent 经授权的支付能力，实现机器间的微支付 。</li>
+</ul>
+<h3 id="7-2-自我进化-Self-Evolution"><a href="#7-2-自我进化-Self-Evolution" class="headerlink" title="7.2 自我进化 (Self-Evolution)"></a>7.2 自我进化 (Self-Evolution)</h3><ul>
+<li>在岗学习：Agent 通过观察人类反馈 (HITL) 和运行日志，总结经验并更新自己的 Prompt 或知识库（如将合规性修正转化为新的规则）。</li>
+<li>Agent Gym：离线的模拟训练场。通过生成合成数据和红队测试，让 Agent 在沙盒中不断试错、变强，随后再部署到生产环境 。</li>
+</ul>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Agent 不仅仅是自动化的延伸，它是软件开发的新范式。从构建单一助手到编排多 Agent 协作网络，成功的关键在于架构设计的严谨性——可靠的工具契约、完善的评估体系（Agent Ops）以及严格的安全边界。</p>
+<blockquote>
+<p><strong>附件&#x2F;参考</strong>：</p>
+<ul>
+<li>Google Whitepaper: <em>Introduction to Agents</em></li>
+<li>相关技术栈推荐：LangChain, LangGraph, Google Vertex AI Agents</li>
+</ul>
+</blockquote>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI-Agent/" rel="tag">AI Agent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Agent/" rel="tag">Agent</a></li></ul></div><div class="post-nav"><a class="next" href="/2022/12/13/%E9%A3%8E%E6%8E%A7%E7%B3%BB%E7%BB%9F/">风控系统</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://wadekun.github.io"/></form></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="About"><img class="nofancybox" src="/img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/username" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:admin@domain.com" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/username" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B9%A6%E7%B1%8D/">书籍</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%BB%E4%B9%A6/">读书</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9A%8F%E7%AC%94/">随笔</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/%E9%9A%8F%E7%AC%94/" style="font-size: 15px;">随笔</a> <a href="/tags/Agent/" style="font-size: 15px;">Agent</a> <a href="/tags/AI-Agent/" style="font-size: 15px;">AI Agent</a> <a href="/tags/Java-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B-%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 15px;">Java - 并发编程 - 多线程</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/Java8/" style="font-size: 15px;">Java8</a> <a href="/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" style="font-size: 15px;">并发编程</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 15px;">多线程</a> <a href="/tags/%E8%AF%BB%E4%B9%A6/" style="font-size: 15px;">读书</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/%E6%8A%80%E6%9C%AF/" style="font-size: 15px;">技术</a> <a href="/tags/Lucene/" style="font-size: 15px;">Lucene</a> <a href="/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" style="font-size: 15px;">搜索引擎</a> <a href="/tags/%E7%AF%AE%E7%90%83/" style="font-size: 15px;">篮球</a> <a href="/tags/%E5%BF%83%E6%83%85/" style="font-size: 15px;">心情</a> <a href="/tags/JVM/" style="font-size: 15px;">JVM</a> <a href="/tags/%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/" style="font-size: 15px;">技术总结</a> <a href="/tags/%E6%B8%B8%E8%AE%B0/" style="font-size: 15px;">游记</a> <a href="/tags/%E6%95%85%E4%BA%8B/" style="font-size: 15px;">故事</a> <a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 15px;">架构</a> <a href="/tags/%E9%A3%8E%E6%8E%A7/" style="font-size: 15px;">风控</a> <a href="/tags/%E5%AE%9E%E6%97%B6%E8%AE%A1%E7%AE%97/" style="font-size: 15px;">实时计算</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/03/30/Introduction-to-Agents/">Introduction to Agents</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/12/13/%E9%A3%8E%E6%8E%A7%E7%B3%BB%E7%BB%9F/">风控系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/24/Java-AQS%E8%AF%A6%E8%A7%A3/">Java AQS详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/21/%E8%80%81%E5%85%B5%E4%B8%8D%E6%AD%BB%EF%BC%8C%E5%8F%AA%E4%BC%9A%E6%85%A2%E6%85%A2%E5%87%8B%E9%9B%B6/">老兵不死，只会慢慢凋零</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/17/Java-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">Java 并发编程知识整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/03/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3JVM-%E4%B8%80/">深入理解JVM(一)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/31/2016-SUMMARY/">2016 SUMMARY</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/02/%E6%B8%85%E8%BF%88-%E9%98%B5%E9%9B%A8%E4%B8%AD%E8%A1%8C%E8%B5%B0%E7%9A%84%E5%9F%8E%E5%B8%82/">清迈-阵雨中行走的城市</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/26/Lucene%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B8%AD%E6%96%87%E7%89%88/">Lucene源码剖析中文版</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/11/%E9%86%89%E7%BF%81%E4%BA%AD%E6%B8%B8%E8%AE%B0/">醉翁亭游记</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2026 <a href="/." rel="nofollow">昆仑子的一亩三分地.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div></body></html>
